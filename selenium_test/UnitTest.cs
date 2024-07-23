@@ -8,7 +8,7 @@ namespace selenium_test;
 [TestFixture("laptop")]
 public class UnitTest{
     private IWebDriver? _driver;
-    private   Actions actions;
+    private   ActionsInWeb actions;
     private readonly string itemSearch;
 
 
@@ -19,7 +19,7 @@ public class UnitTest{
     [SetUp]
     public void Setup(){
          _driver = Driver.Initialize("https://www.amazon.com/-/he/");
-         actions = new Actions(_driver);
+         actions = new ActionsInWeb(_driver);
     }
     // [Test]
     // public void TestWithPOM( ) {
