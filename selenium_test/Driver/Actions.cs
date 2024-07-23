@@ -1,20 +1,15 @@
-using System;
-using System.IO;
-using System.Drawing.Imaging;
-using System.Reflection;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using NUnit.Framework;
 
+using OpenQA.Selenium;
+using NUnit.Framework;
 
 namespace DotnetSeleniumTest.Driver
 {
     public  class Actions{
-        private readonly IWebDriver driver;
+        private readonly IWebDriver? driver;
           public  Actions( IWebDriver driver){
             this.driver = driver;
         }
-        public void Screenshot(){
+        public  void Screenshot(){
             try{
                 string screenshotDirectory = "../../../Pngs";
                     // בדיקה אם התיקייה קיימת, אם לא - יצירת התיקייה
@@ -37,6 +32,11 @@ namespace DotnetSeleniumTest.Driver
             }catch(Exception e){
                 Console.WriteLine(e);
             }
+        }
+
+        internal object ClickAndHold(IWebElement priceFilter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

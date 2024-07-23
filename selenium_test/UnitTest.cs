@@ -1,34 +1,25 @@
-﻿using DotnetSeleniumTest;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using DotnetSeleniumTest.Pages;
-using System;
-using System.IO;
-// using System.Drawing.Imaging;
-// using System.Reflection;
 using  DotnetSeleniumTest.Driver;
-
 
 namespace selenium_test;
 
-[TestFixture("admin", "password")]
-// [TestFixture("admin1", "password")]
-// [TestFixture("admin2", "password")]
-
+[TestFixture("laptop")]
 public class UnitTest{
     private IWebDriver? _driver;
-    private readonly string username;
-    private readonly string password;
+    private   Actions actions;
+    private readonly string itemSearch;
 
-    public UnitTest(string username, string password){
-       this.username = username;
-        this.password = password;
-    }
+
+    public UnitTest(string itemSearch){
+       this.itemSearch = itemSearch;
+       }
+
     [SetUp]
     public void Setup(){
          _driver = Driver.Initialize("https://www.amazon.com/-/he/");
+         actions = new Actions(_driver);
     }
     // [Test]
     // public void TestWithPOM( ) {
@@ -36,20 +27,21 @@ public class UnitTest{
     //     loginPage.Login(username, password);
 
     // }
+
     [Test]
-    // [Order(1)]
     [Category("FirstTest")]
      public void FirstTest(){
-        Actions actions = new Actions(_driver);
         HomePage homesPage = new HomePage(_driver);
-        homesPage.SearchForItem("laptop");
-
+        homesPage.SearchForItem(itemSearch);
         actions.Screenshot();
 
-        }
+       SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
+       searchResultsPage.ApplyFilters();
+       }
 
     [TearDown]
     public void DownTest() {
+        actions.Screenshot();
         _driver.Quit();
         // _driver.Dispose();
     }
