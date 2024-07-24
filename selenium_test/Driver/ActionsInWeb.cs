@@ -11,6 +11,8 @@ namespace DotnetSeleniumTest.Driver
         }
         public void Screenshot(){
             try{
+
+                Thread.Sleep(1000);
                 string screenshotDirectory = "../../../Pngs";
                     // בדיקה אם התיקייה קיימת, אם לא - יצירת התיקייה
                 if (!Directory.Exists(screenshotDirectory)){
@@ -28,6 +30,7 @@ namespace DotnetSeleniumTest.Driver
 
                     // הוספת הצילום מסך כקובץ מצורף לתוצאות הבדיקה
                     TestContext.AddTestAttachment(screenshotPath);
+                    Thread.Sleep(1000);
 
             }catch(Exception e){
                 Console.WriteLine(e);

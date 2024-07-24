@@ -117,12 +117,13 @@ namespace DotnetSeleniumTest.Pages
 
         return productLinks;
         }
+
         public List<string> CollectProductLinksTopNen()
-      {
-        List<string> productLinks = new List<string>();
-        IReadOnlyList <IWebElement> products = GetElements(byProductCard);
-        foreach (var product in products)
         {
+            List<string> productLinks = new List<string>();
+            IReadOnlyList <IWebElement> products = GetElements(byProductCard);
+            foreach (var product in products)
+            {
            IReadOnlyList <IWebElement>reviews = product.FindElements(byProductReviews);
            if (reviews.Count > 10)
             {
@@ -149,6 +150,7 @@ namespace DotnetSeleniumTest.Pages
             if (!badReviewFound  )
             {
                 var link = product.FindElement(By.CssSelector("h2 a")).GetAttribute("href");
+
                 productLinks.Add(link);
 
                 // עצור את הלולאה אם נאספו 10 קישורים

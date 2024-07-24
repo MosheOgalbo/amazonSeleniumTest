@@ -12,6 +12,7 @@ public class UnitTest{
     private ActionsInWeb _actions;
     private readonly string _itemSearch;
     private  List<string>  _productLinks ;
+    FileService fileService;
 
     public UnitTest(string _itemSearch){
         this._itemSearch = _itemSearch;
@@ -25,6 +26,7 @@ public class UnitTest{
        [SetUp]
     public void Setup(){
         Console.WriteLine("nwe Setup");
+         fileService = new FileService();
     }
 
        [Test]
@@ -41,16 +43,15 @@ public class UnitTest{
            searchResultsPage.ApplyFilters();
            //מחזיר 10 פרטים
             _productLinks = searchResultsPage.CollectProductLinksTopNen();
-           FileService fileService = new FileService();
+        //    FileService fileService = new FileService();
            fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
        }
        [Test]
      public void ThirdTest(){
         ProductPage productPage = new ProductPage(_driver);
-        FileService fileService = new FileService();
         productPage.NavigateProductPage(_productLinks);
         List<DotnetSeleniumTest.ReviewModel> reviewModels = productPage.GetAllReviews();
-        fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestLinks.json");
+        fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
 
         // _actions.Screenshot();
        }

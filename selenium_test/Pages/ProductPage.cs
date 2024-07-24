@@ -17,6 +17,8 @@ namespace DotnetSeleniumTest.Pages
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         }
       By byCustomerReviews => By.XPath("//*[contains(@id,'customer_review')]");
+      By byElementReviewerName=>By.XPath("//span [@class='a-profile-name']");
+      By byElementReviewText=>By.XPath("//div[contains(@class,'reviewText')]");
       private IWebElement GetElement(By by) => _driver.FindElement(by);
       private IReadOnlyList <IWebElement> GetElements(By by) => _driver.FindElements(by);
 
@@ -33,9 +35,9 @@ namespace DotnetSeleniumTest.Pages
             var reviews = new List<ReviewModel>();
 
             IReadOnlyList<IWebElement> reviewsElement = GetElements(byCustomerReviews);
-            foreach (var review in reviewsElement){
-                IWebElement reviewerNameElement = review.FindElement(By.CssSelector(".a-profile-name"));
-                IWebElement reviewTextElement = review.FindElement(By.CssSelector("a-expander-content reviewText review-text-content a-expander-partial-collapse-content"));
+            foreach (IWebElement review in reviewsElement){
+               IWebElement  reviewerNameElement = review.FindElement(byElementReviewerName);
+                IWebElement reviewTextElement = review.FindElement(byElementReviewText);
                  // מציאת שם המבקר
                  string reviewerName = reviewerNameElement.Text;
             // מציאת טקסט הביקורת
