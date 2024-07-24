@@ -1,3 +1,4 @@
+using DotnetSeleniumTest.Driver;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -7,13 +8,13 @@ namespace DotnetSeleniumTest.Pages
     public class CartPage
     {
         private readonly IWebDriver _driver;
-        // private readonly WebDriverWait _wait;
+         private readonly WaitDriver _wait;
 
         // אתחול של דף העגלה
         public CartPage(IWebDriver driver)
         {
             _driver = driver;
-            // _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+             _wait = new WaitDriver(_driver);
         }
 
         // רכיבים בדף
@@ -21,9 +22,12 @@ namespace DotnetSeleniumTest.Pages
         private IWebElement CheckoutButton => _driver.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
         private By byProductInCart => By.XPath("//*[@data-bundleitem='absent']");
 
-        // פונקציה לאימות פריטי העגלה
+        // פונקציה לאימות כמות פריטי העגלה
         public void VerifyCart()
         {
+            _wait.WebScreenWait(byProductInCart);
+            string CartIconLogoText=CartIconLogo.Text.ToString();
+
         }
 
         // פונקציה להמשך לתשלום
