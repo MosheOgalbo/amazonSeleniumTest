@@ -20,8 +20,11 @@ namespace DotnetSeleniumTest.Pages
           By memoryFilter => By.XPath("//span[contains(text(), '16 GB')]");
           By ratingFilter => By.XPath("//span[contains(text(),'4 Stars & Up')]");
           By byButtonFilter => By.XPath("//*[contains(@class,'sf-submit-range-button')]");
+          By byProductCard => By.XPath("//*[contains(@class,'gsx-ies-anchor')]");
+          By byProductReviews => By.XPath("//*[contains(@class,'instrumentation-wrapper')]");
         // החזרת IWebElement עבור Locator
         private IWebElement GetElement(By by) => driver.FindElement(by);
+        private IReadOnlyList <IWebElement> GetElements(By by) => driver.FindElements(by);
 
         public void AdjustSlider(int upperBoundValue)
         {
@@ -44,7 +47,6 @@ namespace DotnetSeleniumTest.Pages
             // המתנה לצפייה בתוצאה
             Thread.Sleep(5000);
         }
-
     // סינון תוצאות חיפוש לפי קריטריונים
         public void ApplyFilters(){
             ActionsInWeb actionsInWeb = new ActionsInWeb(driver);
@@ -60,88 +62,91 @@ namespace DotnetSeleniumTest.Pages
             webScreenWait.WebScreenWait(byButtonFilter);
         }
 
-        // // איסוף קישורים של מוצרים
-        // public List<string> CollectProductLinks()
-        // {
-        //     var productLinks = new List<string>();
-        //     var products = driver.FindElements(By.CssSelector("div.s-main-slot div.s-result-item"));
-
-        //     foreach (var product in products)
-        //     {
-        //         try
-        //         {
-        //             // בדיקת מחיר
-        //             var priceElement = product.FindElement(By.CssSelector(".a-price-whole"));
-        //             var priceText = priceElement.Text.Replace(",", "");
-        //             var price = Convert.ToDecimal(priceText);
-
-        //             if (price > 500)
-        //             {
-        //                 continue; // דילוג על מוצרים מעל $500
-        //             }
-
-        //             // בדיקת זיכרון
-        //             var memoryElement = product.FindElements(By.XPath(".//*[contains(text(), '16 GB')]"));
-        //             if (memoryElement.Count == 0)
-        //             {
-        //                 continue; // דילוג על מוצרים ללא 16GB זיכרון
-        //             }
-
-        //             // בדיקת דירוג
-        //             var ratingElement = product.FindElements(By.CssSelector(".a-icon-alt"));
-        //             if (ratingElement.Count == 0)
-        //             {
-        //                 continue; // דילוג על מוצרים ללא דירוג
-        //             }
-        //             var ratingText = ratingElement[0].Text;
-        //             var rating = Convert.ToDecimal(ratingText.Split(' ')[0].Replace(",", "."));
-
-        //             if (rating < 4)
-        //             {
-        //                 continue; // דילוג על מוצרים עם דירוג פחות מ-4 כוכבים
-        //             }
-
-        //             // הוספת הקישור למוצר
-        //             var linkElement = product.FindElement(By.CssSelector("h2 a"));
-        //             var link = linkElement.GetAttribute("href");
-        //             productLinks.Add(link);
-        //         }
-        //         catch (NoSuchElementException)
-        //         {
-        //             // התעלמות ממוצרים שאין להם את אחד האלמנטים הנדרשים
-        //             continue;
-        //         }
-
-        //         if (productLinks.Count >= 10)
-        //         {
-        //             break; // הפסקת החיפוש אם יש יותר מ-10 תוצאות
-        //         }
-        //     }
-
-        //     return productLinks;
-        // }
-
-public List<string> CollectProductLinks()
-{
-    var productLinks = new List<string>();
-    var products = driver.FindElements(By.CssSelector("div.s-main-slot div.s-result-item"));
-
-    foreach (var product in products)
-    {
-        var reviews = product.FindElements(By.CssSelector(".a-section .a-spacing-none .a-size-small .a-link-normal"));
-        if (reviews.Count > 10)
+        // איסוף קישורים של מוצרים
+        public List<string> CollectProductLinks()
         {
-            bool badReviewFound = false;
-            for (int i = 0; i < 10; i++)
+        List<string> productLinks = new List<string>();
+        IReadOnlyList<IWebElement> products = GetElements(byProductCard);
+
+        foreach (var product in products)
+        {
+            IReadOnlyList<IWebElement> reviews = product.FindElements(byProductReviews);
+
+            if (reviews.Count > 0)
             {
-                if (reviews[i].Text.ToLower().Contains("bad"))
+                bool badReviewFound = false;
+
+                for (int i = 0; i < Math.Min(reviews.Count, 10); i++)
                 {
-                    badReviewFound = true;
-                    break;
+                    string reviewText = reviews[i].Text;
+                    // הסר את כל התווים שאינם מספריים
+                    string reviewCountStr = new string(reviewText.Where(char.IsDigit).ToArray());
+
+                    // בדוק אם הצלחנו להמיר את הטקסט למספר שלם
+                    if (int.TryParse(reviewCountStr, out int reviewCount))
+                    {
+                        // בדוק אם מספר הביקורות קטן מ-10 או אם יש ביקורת רעה
+                        if (reviewCount < 10 || reviewText.Contains("bad", StringComparison.OrdinalIgnoreCase))
+                        {
+                            badReviewFound = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        // אם לא הצלחנו להמיר את הטקסט למספר, נניח שיש יותר מ-10 ביקורות
+                        badReviewFound = true;
+                        break;
+                    }
+                }
+
+                // הוסף את הקישור אם לא נמצאה ביקורת רעה
+                if (!badReviewFound)
+                {
+                    var link = product.FindElement(By.CssSelector("h2 a")).GetAttribute("href");
+                    productLinks.Add(link);
+
+                    // עצור את הלולאה אם נאספו 10 קישורים
+                    if (productLinks.Count >= 10)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return productLinks;
+        }
+        public List<string> CollectProductLinksTopNen()
+      {
+        List<string> productLinks = new List<string>();
+        IReadOnlyList <IWebElement> products = GetElements(byProductCard);
+        foreach (var product in products)
+        {
+           IReadOnlyList <IWebElement>reviews = product.FindElements(byProductReviews);
+           if (reviews.Count > 10)
+            {
+               bool badReviewFound = false;
+               for (int i = 0; i < 10; i++)
+                {    // קבל את הטקסט מהאלמנט
+                     string reviewText = reviews[i].Text;
+                    // הסר את כל התווים שאינם מספריים
+                    string reviewCountStr = new string(reviewText.Where(char.IsDigit).ToArray());
+                    // המר את הטקסט למספר שלם
+                    int reviewCount = int.Parse(reviewCountStr);
+
+                    if (reviewCount < 10){
+                        if (reviewText.Contains("bad"))
+                        {
+                            badReviewFound = true;
+                            break;
+                            }
+                        badReviewFound = true;
+                        break;
                 }
             }
 
-            if (!badReviewFound)
+            if (!badReviewFound  )
             {
                 var link = product.FindElement(By.CssSelector("h2 a")).GetAttribute("href");
                 productLinks.Add(link);
@@ -158,6 +163,5 @@ public List<string> CollectProductLinks()
     return productLinks;
 }
 
-
-        }
+   }
 }

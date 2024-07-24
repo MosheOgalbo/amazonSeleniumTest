@@ -10,11 +10,11 @@ namespace selenium_test;
 public class UnitTest{
     private IWebDriver _driver;
     private ActionsInWeb _actions;
-    private readonly string itemSearch;
-
+    private readonly string _itemSearch;
+    private  List<string>  _productLinks ;
 
     public UnitTest(string _itemSearch){
-        this.itemSearch = _itemSearch;
+        this._itemSearch = _itemSearch;
        }
 
         [OneTimeSetUp]
@@ -22,7 +22,6 @@ public class UnitTest{
             _driver = Driver.Initialize("https://www.amazon.com/");
             _actions = new ActionsInWeb(_driver);
         }
-
 
     [SetUp]
     public void Setup(){
@@ -33,7 +32,7 @@ public class UnitTest{
     [Category("FirstTest")]
      public void FirstTest(){
         HomePage homesPage = new HomePage(_driver);
-        homesPage.SearchForItem(itemSearch);
+        homesPage.SearchForItem(_itemSearch);
         _actions.Screenshot();
        }
        [Test]
@@ -41,12 +40,25 @@ public class UnitTest{
            //שמירה על הפרטים לפי הדרישה
            SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
            searchResultsPage.ApplyFilters();
-           var productLinks = searchResultsPage.CollectProductLinks();
-        //    Console.WriteLine(productLinks.Count);
+           //מחזיר 10 פרטים
+            _productLinks = searchResultsPage.CollectProductLinksTopNen();
            FileService fileService = new FileService();
-           fileService.SaveLinksToJsonFile(productLinks,"../../../TestLinks.json");
+           fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
        }
+       [Test]
+       public void ThirdTest(){
+// ודא שהרשימה אינה ריקה ויש לפחות שני פריטים
+if (_productLinks.Count > 1)
+{
+    Driver.TransitionBrowser(_driver, _productLinks[1]);
+            _actions.Screenshot();
 
+}
+else
+{
+    Console.WriteLine("לא נמצאו קישורים מספיקים ברשימה.");
+}
+       }
     [TearDown]
     public void DownTest() {
         _actions.Screenshot();
@@ -55,7 +67,5 @@ public class UnitTest{
     [OneTimeTearDown]
     public void OneTimeTearDown(){
         Driver.Cleanup(_driver);
-        // _driver.Quit();
-        // _driver.Dispose();
     }
 }

@@ -1,7 +1,5 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-
 
 namespace DotnetSeleniumTest.Driver
 {
@@ -14,12 +12,27 @@ namespace DotnetSeleniumTest.Driver
         {
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
-            driver.Navigate().GoToUrl(url);
+            TransitionBrowser(driver, url);
+            driver.Navigate().Refresh();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            //   if(driver.Url==url){
+            //     Cleanup(driver);
+            //     return driver;
+            //     }else{
+            //         return driver;
+                //}
             return driver;
         }
 
+        public static void TransitionBrowser(IWebDriver driver, string url){
+            try{
+                driver.Navigate().GoToUrl(url);
 
+            }catch(Exception e){
+                Console.WriteLine(e);
+                 throw new NotImplementedException();
+            }
+        }
         public static  void Cleanup(IWebDriver driver)
         {
             if (driver != null)

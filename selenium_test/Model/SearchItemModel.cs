@@ -1,7 +1,7 @@
 
 namespace DotnetSeleniumTest
 {
-  public class LoginModel{
+  public class SearchItemModel{
     public string? Username { get; set; }
     public string? Password { get; set; }
     }
