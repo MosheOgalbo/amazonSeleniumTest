@@ -2,7 +2,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 
-namespace AmazonAutomation.Pages
+namespace DotnetSeleniumTest.Pages
 {
     public class CartPage
     {

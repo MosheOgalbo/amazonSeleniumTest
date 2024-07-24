@@ -13,6 +13,7 @@ namespace DotnetSeleniumTest.Driver
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             TransitionBrowser(driver, url);
+            Thread.Sleep(5000);
             driver.Navigate().Refresh();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             //   if(driver.Url==url){

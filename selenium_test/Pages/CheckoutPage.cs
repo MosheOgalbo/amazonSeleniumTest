@@ -2,7 +2,7 @@ using DotnetSeleniumTest.Driver;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace AmazonAutomation.Pages
+namespace DotnetSeleniumTest.Pages
 {
     public class CheckoutPage
     {

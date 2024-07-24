@@ -1,3 +1,4 @@
+using DotnetSeleniumTest;
 using Newtonsoft.Json;
 
 namespace AmazonAutomation.Services
@@ -21,6 +22,15 @@ namespace AmazonAutomation.Services
         {
             // המרת רשימת הקישורים ל-JSON
             string json = JsonConvert.SerializeObject(links, Formatting.Indented);
+
+            // כתיבת ה-JSON לקובץ
+            File.WriteAllText(filePath, json);
+        }
+
+        public void SaveReviewsToJsonFile(List<ReviewModel> reviews, string filePath)
+        {
+            // המרת רשימת הביקורות ל-JSON
+            string json = JsonConvert.SerializeObject(reviews, Formatting.Indented);
 
             // כתיבת ה-JSON לקובץ
             File.WriteAllText(filePath, json);

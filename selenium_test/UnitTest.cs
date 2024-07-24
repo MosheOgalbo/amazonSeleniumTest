@@ -16,27 +16,26 @@ public class UnitTest{
     public UnitTest(string _itemSearch){
         this._itemSearch = _itemSearch;
        }
-
-        [OneTimeSetUp]
-        public void OneTimeSetUp(){
+       [OneTimeSetUp]
+    public void OneTimeSetUp(){
             _driver = Driver.Initialize("https://www.amazon.com/");
             _actions = new ActionsInWeb(_driver);
         }
 
-    [SetUp]
+       [SetUp]
     public void Setup(){
         Console.WriteLine("nwe Setup");
     }
 
-    [Test]
-    [Category("FirstTest")]
+       [Test]
+       [Category("FirstTest")]
      public void FirstTest(){
         HomePage homesPage = new HomePage(_driver);
         homesPage.SearchForItem(_itemSearch);
         _actions.Screenshot();
        }
        [Test]
-       public void SecondTest(){
+     public void SecondTest(){
            //שמירה על הפרטים לפי הדרישה
            SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
            searchResultsPage.ApplyFilters();
@@ -46,18 +45,14 @@ public class UnitTest{
            fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
        }
        [Test]
-       public void ThirdTest(){
-// ודא שהרשימה אינה ריקה ויש לפחות שני פריטים
-if (_productLinks.Count > 1)
-{
-    Driver.TransitionBrowser(_driver, _productLinks[1]);
-            _actions.Screenshot();
+     public void ThirdTest(){
+        ProductPage productPage = new ProductPage(_driver);
+        FileService fileService = new FileService();
+        productPage.NavigateProductPage(_productLinks);
+        List<DotnetSeleniumTest.ReviewModel> reviewModels = productPage.GetAllReviews();
+        fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestLinks.json");
 
-}
-else
-{
-    Console.WriteLine("לא נמצאו קישורים מספיקים ברשימה.");
-}
+        // _actions.Screenshot();
        }
     [TearDown]
     public void DownTest() {

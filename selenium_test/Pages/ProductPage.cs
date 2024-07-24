@@ -1,10 +1,9 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using AmazonAutomation.Services;
+using DotnetSeleniumTest.Driver;
 
-namespace AmazonAutomation.Pages
+namespace DotnetSeleniumTest.Pages
 {
     public class ProductPage
     {
@@ -17,17 +16,38 @@ namespace AmazonAutomation.Pages
             _driver = driver;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         }
+      By byCustomerReviews => By.XPath("//*[contains(@id,'customer_review')]");
+      private IWebElement GetElement(By by) => _driver.FindElement(by);
+      private IReadOnlyList <IWebElement> GetElements(By by) => _driver.FindElements(by);
 
-        // פונקציה לבדוק אם המוצר תקין
-        public bool IsValidProduct()
-        {
-            var reviewsElement = _driver.FindElement(By.Id("acrCustomerReviewText"));
-            int reviewCount = int.Parse(reviewsElement.Text.Split(' ')[0].Replace(",", ""));
-            if (reviewCount < 10) return false; // בודק אם למוצר יש לפחות 10 ביקורות
 
-            var reviews = _driver.FindElements(By.CssSelector(".review-text-content span"));
-            return !reviews.Take(10).Any(review => review.Text.Contains("bad", StringComparison.OrdinalIgnoreCase));
-            // בודק אם אחת מהביקורות הראשונות מכילה את המילה "bad"
+        public  void NavigateProductPage(List<string> ProducList){
+            if(DataCheck.IsDataEmpty(ProducList)){
+                Driver.Driver.TransitionBrowser(_driver, ProducList[0]);
+             }
+        }
+        // לוקח את כול הביקורות של המוצר
+        public List<ReviewModel> GetAllReviews()
+        {// איסוף כל הביקורות
+
+            var reviews = new List<ReviewModel>();
+
+            IReadOnlyList<IWebElement> reviewsElement = GetElements(byCustomerReviews);
+            foreach (var review in reviewsElement){
+                IWebElement reviewerNameElement = review.FindElement(By.CssSelector(".a-profile-name"));
+                IWebElement reviewTextElement = review.FindElement(By.CssSelector("a-expander-content reviewText review-text-content a-expander-partial-collapse-content"));
+                 // מציאת שם המבקר
+                 string reviewerName = reviewerNameElement.Text;
+            // מציאת טקסט הביקורת
+            string reviewText = reviewTextElement.Text;
+            reviews.Add(new ReviewModel
+                {
+                    ReviewerName = reviewerName,
+                    ReviewText = reviewText
+                });
+            }
+            return reviews;
+
         }
     }
 }
