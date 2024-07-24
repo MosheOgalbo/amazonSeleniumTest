@@ -7,7 +7,7 @@ namespace DotnetSeleniumTest.Pages
     public class CartPage
     {
         private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
+        // private readonly WebDriverWait _wait;
 
         // אתחול של דף העגלה
         public CartPage(IWebDriver driver)
