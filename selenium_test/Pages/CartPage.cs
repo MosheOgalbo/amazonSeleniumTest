@@ -21,14 +21,36 @@ namespace DotnetSeleniumTest.Pages
         private IWebElement CartIconLogo => _driver.FindElement(By.Id("nav-cart")); // אייקון העגלה
         private IWebElement CheckoutButton => _driver.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
         private By byProductInCart => By.XPath("//*[@data-bundleitem='absent']");
+        private IReadOnlyList <IWebElement> GetElements(By by) => _driver.FindElements(by);
+
 
         // פונקציה לאימות כמות פריטי העגלה
-        public void VerifyCart()
+        public  bool VerifyCart()
         {
             _wait.WebScreenWait(byProductInCart);
-            string CartIconLogoText=CartIconLogo.Text.ToString();
+            string cartIconLogoText= CartIconLogo.Text;
+            int numberItemsList=GetElements(byProductInCart).Count();
+           // בדוק אם הטקסט אינו ריק
+           if (!string.IsNullOrWhiteSpace(cartIconLogoText)|| numberItemsList!=0)
+           {
+            // נסה להמיר את הטקסט למספר
+            if (int.TryParse(cartIconLogoText, out int cartIconLogoValue))
+            {
+                if (numberItemsList==cartIconLogoValue){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            else{
+            // אם ההמרה נכשלה, הודע על כך
+            Console.WriteLine($"הטקסט '{cartIconLogoText}' אינו מספר.");
+            return false;
+            }
 
         }
+        return true;
+    }
 
         // פונקציה להמשך לתשלום
         public void ProceedToCheckout()

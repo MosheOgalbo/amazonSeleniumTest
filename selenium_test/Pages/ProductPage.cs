@@ -16,9 +16,9 @@ namespace DotnetSeleniumTest.Pages
             _driver = driver;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
         }
-      By byCustomerReviews => By.XPath("//*[contains(@id,'customer_review')]");
-      By byElementReviewerName=>By.XPath("//span [@class='a-profile-name']");
-      By byElementReviewText=>By.XPath("//div[contains(@class,'reviewText')]");
+      private By byCustomerReviews => By.XPath("//*[contains(@id,'customer_review')]");
+      private By byElementReviewerName=>By.XPath("//span [@class='a-profile-name']");
+      private By byElementReviewText=>By.XPath("//div[contains(@class,'reviewText')]");
       private IWebElement GetElement(By by) => _driver.FindElement(by);
       private IReadOnlyList <IWebElement> GetElements(By by) => _driver.FindElements(by);
 
