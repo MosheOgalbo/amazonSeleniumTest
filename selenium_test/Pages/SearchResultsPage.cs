@@ -60,66 +60,104 @@ namespace DotnetSeleniumTest.Pages
             webScreenWait.WebScreenWait(byButtonFilter);
         }
 
-        // איסוף קישורים של מוצרים
-        public List<string> CollectProductLinks()
+        // // איסוף קישורים של מוצרים
+        // public List<string> CollectProductLinks()
+        // {
+        //     var productLinks = new List<string>();
+        //     var products = driver.FindElements(By.CssSelector("div.s-main-slot div.s-result-item"));
+
+        //     foreach (var product in products)
+        //     {
+        //         try
+        //         {
+        //             // בדיקת מחיר
+        //             var priceElement = product.FindElement(By.CssSelector(".a-price-whole"));
+        //             var priceText = priceElement.Text.Replace(",", "");
+        //             var price = Convert.ToDecimal(priceText);
+
+        //             if (price > 500)
+        //             {
+        //                 continue; // דילוג על מוצרים מעל $500
+        //             }
+
+        //             // בדיקת זיכרון
+        //             var memoryElement = product.FindElements(By.XPath(".//*[contains(text(), '16 GB')]"));
+        //             if (memoryElement.Count == 0)
+        //             {
+        //                 continue; // דילוג על מוצרים ללא 16GB זיכרון
+        //             }
+
+        //             // בדיקת דירוג
+        //             var ratingElement = product.FindElements(By.CssSelector(".a-icon-alt"));
+        //             if (ratingElement.Count == 0)
+        //             {
+        //                 continue; // דילוג על מוצרים ללא דירוג
+        //             }
+        //             var ratingText = ratingElement[0].Text;
+        //             var rating = Convert.ToDecimal(ratingText.Split(' ')[0].Replace(",", "."));
+
+        //             if (rating < 4)
+        //             {
+        //                 continue; // דילוג על מוצרים עם דירוג פחות מ-4 כוכבים
+        //             }
+
+        //             // הוספת הקישור למוצר
+        //             var linkElement = product.FindElement(By.CssSelector("h2 a"));
+        //             var link = linkElement.GetAttribute("href");
+        //             productLinks.Add(link);
+        //         }
+        //         catch (NoSuchElementException)
+        //         {
+        //             // התעלמות ממוצרים שאין להם את אחד האלמנטים הנדרשים
+        //             continue;
+        //         }
+
+        //         if (productLinks.Count >= 10)
+        //         {
+        //             break; // הפסקת החיפוש אם יש יותר מ-10 תוצאות
+        //         }
+        //     }
+
+        //     return productLinks;
+        // }
+
+public List<string> CollectProductLinks()
+{
+    var productLinks = new List<string>();
+    var products = driver.FindElements(By.CssSelector("div.s-main-slot div.s-result-item"));
+
+    foreach (var product in products)
+    {
+        var reviews = product.FindElements(By.CssSelector(".a-section .a-spacing-none .a-size-small .a-link-normal"));
+        if (reviews.Count > 10)
         {
-            var productLinks = new List<string>();
-            var products = driver.FindElements(By.CssSelector("div.s-main-slot div.s-result-item"));
-
-            foreach (var product in products)
+            bool badReviewFound = false;
+            for (int i = 0; i < 10; i++)
             {
-                try
+                if (reviews[i].Text.ToLower().Contains("bad"))
                 {
-                    // בדיקת מחיר
-                    var priceElement = product.FindElement(By.CssSelector(".a-price-whole"));
-                    var priceText = priceElement.Text.Replace(",", "");
-                    var price = Convert.ToDecimal(priceText);
-
-                    if (price > 500)
-                    {
-                        continue; // דילוג על מוצרים מעל $500
-                    }
-
-                    // בדיקת זיכרון
-                    var memoryElement = product.FindElements(By.XPath(".//*[contains(text(), '16 GB')]"));
-                    if (memoryElement.Count == 0)
-                    {
-                        continue; // דילוג על מוצרים ללא 16GB זיכרון
-                    }
-
-                    // בדיקת דירוג
-                    var ratingElement = product.FindElements(By.CssSelector(".a-icon-alt"));
-                    if (ratingElement.Count == 0)
-                    {
-                        continue; // דילוג על מוצרים ללא דירוג
-                    }
-                    var ratingText = ratingElement[0].Text;
-                    var rating = Convert.ToDecimal(ratingText.Split(' ')[0].Replace(",", "."));
-
-                    if (rating < 4)
-                    {
-                        continue; // דילוג על מוצרים עם דירוג פחות מ-4 כוכבים
-                    }
-
-                    // הוספת הקישור למוצר
-                    var linkElement = product.FindElement(By.CssSelector("h2 a"));
-                    var link = linkElement.GetAttribute("href");
-                    productLinks.Add(link);
-                }
-                catch (NoSuchElementException)
-                {
-                    // התעלמות ממוצרים שאין להם את אחד האלמנטים הנדרשים
-                    continue;
-                }
-
-                if (productLinks.Count >= 10)
-                {
-                    break; // הפסקת החיפוש אם יש יותר מ-10 תוצאות
+                    badReviewFound = true;
+                    break;
                 }
             }
 
-            return productLinks;
-        }
-        }
+            if (!badReviewFound)
+            {
+                var link = product.FindElement(By.CssSelector("h2 a")).GetAttribute("href");
+                productLinks.Add(link);
 
+                // עצור את הלולאה אם נאספו 10 קישורים
+                if (productLinks.Count >= 10)
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    return productLinks;
+}
+
+
+        }
 }

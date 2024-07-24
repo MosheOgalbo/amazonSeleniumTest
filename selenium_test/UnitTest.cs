@@ -2,70 +2,60 @@
 using OpenQA.Selenium;
 using DotnetSeleniumTest.Pages;
 using  DotnetSeleniumTest.Driver;
+using AmazonAutomation.Services;
 
 namespace selenium_test;
 
 [TestFixture("laptop")]
 public class UnitTest{
-    private IWebDriver? _driver;
-    private   ActionsInWeb actions;
+    private IWebDriver _driver;
+    private ActionsInWeb _actions;
     private readonly string itemSearch;
 
 
-    public UnitTest(string itemSearch){
-       this.itemSearch = itemSearch;
+    public UnitTest(string _itemSearch){
+        this.itemSearch = _itemSearch;
        }
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp(){
+            _driver = Driver.Initialize("https://www.amazon.com/");
+            _actions = new ActionsInWeb(_driver);
+        }
+
 
     [SetUp]
     public void Setup(){
-         _driver = Driver.Initialize("https://www.amazon.com/-/he/");
-         actions = new ActionsInWeb(_driver);
+        Console.WriteLine("nwe Setup");
     }
-    // [Test]
-    // public void TestWithPOM( ) {
-    //     LoginPage loginPage = new LoginPage(_driver);
-    //     loginPage.Login(username, password);
-
-    // }
 
     [Test]
     [Category("FirstTest")]
      public void FirstTest(){
         HomePage homesPage = new HomePage(_driver);
         homesPage.SearchForItem(itemSearch);
-        actions.Screenshot();
-
-       SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
-       searchResultsPage.ApplyFilters();
-
-        var productLinks = searchResultsPage.CollectProductLinks();
-        Console.WriteLine(productLinks.Count);
+        _actions.Screenshot();
+       }
+       [Test]
+       public void SecondTest(){
+           //שמירה על הפרטים לפי הדרישה
+           SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
+           searchResultsPage.ApplyFilters();
+           var productLinks = searchResultsPage.CollectProductLinks();
+        //    Console.WriteLine(productLinks.Count);
+           FileService fileService = new FileService();
+           fileService.SaveLinksToJsonFile(productLinks,"../../../TestLinks.json");
        }
 
     [TearDown]
     public void DownTest() {
-        actions.Screenshot();
-        _driver.Quit();
+        _actions.Screenshot();
+    }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown(){
+        Driver.Cleanup(_driver);
+        // _driver.Quit();
         // _driver.Dispose();
     }
 }
-
-
-
-
-//     [Test]
- //  [Order(1)]
-    // [Category("FirstTest")]
-//     [TestCaseSource(nameof(Login))]
-//     public void TestPOM(LoginModel  longModel) {
-//         LoginPage loginPage = new LoginPage(_driver);
-//         loginPage.Login(longModel.Username, longModel.Password);
-
-//     }
-// public static IEnumerable<LoginModel> Login() {
-//     yield return new LoginModel(){
-//         username = "admin",
-//         password = "password"
-//     };
-
-// }

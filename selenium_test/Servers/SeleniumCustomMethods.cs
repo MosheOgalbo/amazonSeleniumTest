@@ -30,7 +30,7 @@ namespace selenium_test
                 Console.WriteLine(e.Data.ToString());
                 }
         }
-            public static void SelectDropdownByValue(this IWebElement locator, string value){
+        public static void SelectDropdownByValue(this IWebElement locator, string value){
                 try{
                     SelectElement selectElement= new SelectElement(locator);
                     selectElement.SelectByValue(value);
@@ -48,7 +48,7 @@ namespace selenium_test
                 Console.WriteLine(e.Data.ToString());
            }
         }
-     public static List<string> GetAllSelectedOptions(this IWebElement locator){
+       public static List<string> GetAllSelectedOptions(this IWebElement locator){
         if (locator == null){
             throw new ArgumentNullException(nameof(locator), "The locator cannot be null.");
             }

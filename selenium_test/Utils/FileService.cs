@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
+using Newtonsoft.Json;
 
 namespace AmazonAutomation.Services
 {
@@ -15,6 +14,16 @@ namespace AmazonAutomation.Services
                     writer.WriteLine(link);
                 }
             }
+        }
+
+        //פונקציה לשמירה קישורי לקובץ json
+        public void SaveLinksToJsonFile(List<string> links, string filePath)
+        {
+            // המרת רשימת הקישורים ל-JSON
+            string json = JsonConvert.SerializeObject(links, Formatting.Indented);
+
+            // כתיבת ה-JSON לקובץ
+            File.WriteAllText(filePath, json);
         }
     }
 }
