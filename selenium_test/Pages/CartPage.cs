@@ -17,8 +17,9 @@ namespace DotnetSeleniumTest.Pages
         }
 
         // רכיבים בדף
-        private IWebElement CartIcon => _driver.FindElement(By.Id("")); // אייקון העגלה
-        private IWebElement CheckoutButton => _driver.FindElement(By.XPath("")); // כפתור ההמשך לתשלום
+        private IWebElement CartIconLogo => _driver.FindElement(By.Id("nav-cart")); // אייקון העגלה
+        private IWebElement CheckoutButton => _driver.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
+        private By byProductInCart => By.XPath("//*[@data-bundleitem='absent']");
 
         // פונקציה לאימות פריטי העגלה
         public void VerifyCart()
