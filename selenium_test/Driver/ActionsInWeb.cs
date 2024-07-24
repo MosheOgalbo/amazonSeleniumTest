@@ -9,7 +9,7 @@ namespace DotnetSeleniumTest.Driver
           public  ActionsInWeb( IWebDriver driver){
             this.driver = driver;
         }
-        public  void Screenshot(){
+        public void Screenshot(){
             try{
                 string screenshotDirectory = "../../../Pngs";
                     // בדיקה אם התיקייה קיימת, אם לא - יצירת התיקייה

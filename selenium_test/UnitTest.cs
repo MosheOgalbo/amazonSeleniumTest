@@ -37,6 +37,9 @@ public class UnitTest{
 
        SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
        searchResultsPage.ApplyFilters();
+
+        var productLinks = searchResultsPage.CollectProductLinks();
+        Console.WriteLine(productLinks.Count);
        }
 
     [TearDown]

@@ -1,0 +1,28 @@
+using DotnetSeleniumTest.Driver;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+
+namespace AmazonAutomation.Pages
+{
+    public class CheckoutPage
+    {
+        private readonly IWebDriver _driver;
+        private readonly WebDriverWait _wait;
+        private readonly ActionsInWeb _actions;
+
+        // אתחול של דף התשלום
+        public CheckoutPage(IWebDriver driver)
+        {
+            _driver = driver;
+             ActionsInWeb actions = new ActionsInWeb(_driver);
+
+        }
+
+        // פונקציה לצילום מסך
+        public void TakeScreenshot(string filePath)
+        {
+        //    Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
+            _actions.Screenshot();
+        }
+    }
+}
