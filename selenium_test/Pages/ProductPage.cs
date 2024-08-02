@@ -29,24 +29,25 @@ namespace DotnetSeleniumTest.Pages
              }
         }
         // לוקח את כול הביקורות של המוצר
-        public List<ReviewModel> GetAllReviews()
+        public List<ItemReviewModel> GetAllReviews()
         {// איסוף כל הביקורות
 
-            var reviews = new List<ReviewModel>();
+            var reviews = new List<ItemReviewModel>();
 
             IReadOnlyList<IWebElement> reviewsElement = GetElements(byCustomerReviews);
             foreach (IWebElement review in reviewsElement){
                IWebElement  reviewerNameElement = review.FindElement(byElementReviewerName);
-                IWebElement reviewTextElement = review.FindElement(byElementReviewText);
+               IWebElement reviewTextElement = review.FindElement(byElementReviewText);
                  // מציאת שם המבקר
-                 string reviewerName = reviewerNameElement.Text;
-            // מציאת טקסט הביקורת
-            string reviewText = reviewTextElement.Text;
-            reviews.Add(new ReviewModel
+            //      string reviewerName = reviewerNameElement.Text;
+            // // מציאת טקסט הביקורת
+            // string reviewText = reviewTextElement.Text;
+            reviews.Add(new ItemReviewModel
                 {
-                    ReviewerName = reviewerName,
-                    ReviewText = reviewText
-                });
+                    ReviewerName = reviewerNameElement.Text,
+                    ReviewText = reviewTextElement.Text,
+                }
+                );
             }
             return reviews;
 

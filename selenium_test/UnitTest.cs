@@ -50,7 +50,7 @@ public class UnitTest{
      public void ThirdTest(){
         ProductPage productPage = new ProductPage(_driver);
         productPage.NavigateProductPage(_productLinks);
-        List<DotnetSeleniumTest.ReviewModel> reviewModels = productPage.GetAllReviews();
+        List<DotnetSeleniumTest.ItemReviewModel> reviewModels = productPage.GetAllReviews();
         fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
 
         // _actions.Screenshot();

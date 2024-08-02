@@ -1,6 +1,6 @@
 namespace DotnetSeleniumTest
 {
-    public class ReviewModel
+    public class ItemReviewModel
     {
           public string ReviewerName { get; set; }
           public string ReviewText { get; set; }

@@ -27,7 +27,7 @@ namespace AmazonAutomation.Services
             File.WriteAllText(filePath, json);
         }
 
-        public void SaveReviewsToJsonFile(List<ReviewModel> reviews, string filePath)
+        public  void  SaveReviewsToJsonFile(List<ItemReviewModel> reviews, string filePath)
         {
             // המרת רשימת הביקורות ל-JSON
             string json = JsonConvert.SerializeObject(reviews, Formatting.Indented);
