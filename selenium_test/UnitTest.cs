@@ -81,6 +81,6 @@ public class UnitTest{
 
     [OneTimeTearDown]
     public void OneTimeTearDown(){
-        //Driver.Cleanup(_driver);
+        Driver.Cleanup(_driver);
     }
 }

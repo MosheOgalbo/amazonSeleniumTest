@@ -31,7 +31,7 @@ namespace DotnetSeleniumTest.Pages
             string cartIconLogoText= CartIconLogo.Text;
             int numberItemsList=GetElements(byProductInCart).Count();
            // בדוק אם הטקסט אינו ריק
-           if (!string.IsNullOrWhiteSpace(cartIconLogoText)|| numberItemsList!=0)
+           if (!string.IsNullOrWhiteSpace(cartIconLogoText)|| numberItemsList != 0)
            {
             // נסה להמיר את הטקסט למספר
             if (int.TryParse(cartIconLogoText, out int cartIconLogoValue))
@@ -62,12 +62,13 @@ namespace DotnetSeleniumTest.Pages
         {
             _wait.UnitToElementIsClick(byProductInCart).Click();
             if (VerifyCart()) {
-                ProceedToCheckout();
+                Console.WriteLine("Payment can be continued");
             }
             else
             {
                 Console.WriteLine("Payment cannot be continued because there is no product");
             }
+            ProceedToCheckout();
             //_wait.UntilElementIsRemoved(byProductInCart);
         }
     }
