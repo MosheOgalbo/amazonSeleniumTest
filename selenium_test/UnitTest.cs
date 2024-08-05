@@ -66,12 +66,14 @@ public class UnitTest{
        [Test]
        [Order(5)]
        public void FifthTest(){
-        _actions.Screenshot();
-       }
-    [TearDown]
-    public void DownTest() {
         CheckoutPage checkoutPage = new CheckoutPage(_driver);
         checkoutPage.MakingPaymentForProduct();
+        //_actions.Screenshot();
+       }
+
+    [TearDown]
+    public void DownTest() {
+        _actions.Screenshot();
     }
 
     [OneTimeTearDown]
