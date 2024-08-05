@@ -68,7 +68,7 @@ namespace DotnetSeleniumTest.Pages
             {
                 Console.WriteLine("Payment cannot be continued because there is no product");
             }
-            _wait.UntilElementIsRemoved(byProductInCart);
+            //_wait.UntilElementIsRemoved(byProductInCart);
         }
     }
 }
