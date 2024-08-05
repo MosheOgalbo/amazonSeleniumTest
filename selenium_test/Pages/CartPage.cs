@@ -57,5 +57,18 @@ namespace DotnetSeleniumTest.Pages
         {
             CheckoutButton.Click(); // לוחץ על כפתור ההמשך לתשלום
         }
+
+        public void ProceedToPayForProduct()
+        {
+            _wait.UnitToElementIsClick(byProductInCart).Click();
+            if (VerifyCart()) {
+                ProceedToCheckout();
+            }
+            else
+            {
+                Console.WriteLine("Payment cannot be continued because there is no product");
+            }
+            _wait.UntilElementIsRemoved(byProductInCart);
+        }
     }
 }

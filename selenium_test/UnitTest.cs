@@ -60,7 +60,7 @@ public class UnitTest{
        public void FourthTest(){
          ProductPage productPage = new ProductPage(_driver);
          productPage.AddProductToCart();
-         //CartPage cartPage = new CartPage(_driver);
+         CartPage cartPage = new CartPage(_driver);
 
        }
     [TearDown]
