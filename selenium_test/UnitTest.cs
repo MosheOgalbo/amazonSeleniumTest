@@ -68,7 +68,6 @@ public class UnitTest{
        public void FifthTest(){
         CheckoutPage checkoutPage = new CheckoutPage(_driver);
         checkoutPage.MakingPaymentForProduct();
-        //_actions.Screenshot();
        }
 
     [TearDown]
