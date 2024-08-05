@@ -56,16 +56,22 @@ public class UnitTest{
         fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
        }
        [Test]
-        [Order(4)]
+       [Order(4)]
        public void FourthTest(){
          ProductPage productPage = new ProductPage(_driver);
          productPage.AddProductToCart();
          CartPage cartPage = new CartPage(_driver);
-
+         cartPage.ProceedToPayForProduct();
+       }
+       [Test]
+       [Order(5)]
+       public void FifthTest(){
+        _actions.Screenshot();
        }
     [TearDown]
     public void DownTest() {
-        _actions.Screenshot();
+        CheckoutPage checkoutPage = new CheckoutPage(_driver);
+        checkoutPage.MakingPaymentForProduct();
     }
 
     [OneTimeTearDown]

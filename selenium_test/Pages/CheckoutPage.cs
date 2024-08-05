@@ -19,7 +19,7 @@ namespace DotnetSeleniumTest.Pages
         }
 
         // פונקציה לצילום מסך
-        public void TakeScreenshot(string filePath)
+        public void MakingPaymentForProduct()
         {
         //    Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
             _actions.Screenshot();
