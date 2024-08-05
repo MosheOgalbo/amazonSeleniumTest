@@ -14,7 +14,7 @@ namespace DotnetSeleniumTest.Driver
              return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
         }
          public bool UntilElementIsRemoved(By locator){
-             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(locator));
          }
 

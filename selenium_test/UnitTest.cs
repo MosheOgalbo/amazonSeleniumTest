@@ -31,12 +31,14 @@ public class UnitTest{
 
        [Test]
        [Category("FirstTest")]
+       [Order(1)]
      public void FirstTest(){
         HomePage homesPage = new HomePage(_driver);
         homesPage.SearchForItem(_itemSearch);
         //_actions.Screenshot();
        }
        [Test]
+        [Order(2)]
      public void SecondTest(){
            //שמירה על הפרטים לפי הדרישה
            SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
@@ -46,6 +48,7 @@ public class UnitTest{
            fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
        }
        [Test]
+        [Order(3)]
      public void ThirdTest(){
         ProductPage productPage = new ProductPage(_driver);
         productPage.NavigateProductPage(_productLinks);
@@ -53,6 +56,7 @@ public class UnitTest{
         fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
        }
        [Test]
+        [Order(4)]
        public void FourthTest(){
          ProductPage productPage = new ProductPage(_driver);
          productPage.AddProductToCart();
