@@ -14,32 +14,33 @@ public class UnitTest{
     private  List<string>  _productLinks ;
     FileService fileService;
 
-    public UnitTest(string _itemSearch){
+      public UnitTest(string _itemSearch){
         this._itemSearch = _itemSearch;
        }
        [OneTimeSetUp]
-    public void OneTimeSetUp(){
+       public void OneTimeSetUp(){
             _driver = Driver.Initialize("https://www.amazon.com/");
             _actions = new ActionsInWeb(_driver);
         }
 
        [SetUp]
-    public void Setup(){
+       public void Setup(){
         Console.WriteLine("nwe Setup");
          fileService = new FileService();
-    }
+        }
 
        [Test]
        [Category("FirstTest")]
        [Order(1)]
-     public void FirstTest(){
+       public void FirstTest(){
         HomePage homesPage = new HomePage(_driver);
         homesPage.SearchForItem(_itemSearch);
         //_actions.Screenshot();
        }
+
        [Test]
-        [Order(2)]
-     public void SecondTest(){
+       [Order(2)]
+       public void SecondTest(){
            //שמירה על הפרטים לפי הדרישה
            SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
            searchResultsPage.ApplyFilters();
@@ -47,14 +48,16 @@ public class UnitTest{
             _productLinks = searchResultsPage.CollectProductLinksTopNen();
            fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
        }
+
        [Test]
-        [Order(3)]
-     public void ThirdTest(){
+       [Order(3)]
+       public void ThirdTest(){
         ProductPage productPage = new ProductPage(_driver);
         productPage.NavigateProductPage(_productLinks);
         List<DotnetSeleniumTest.ItemReviewModel> reviewModels = productPage.GetAllReviews();
         fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
        }
+
        [Test]
        [Order(4)]
        public void FourthTest(){
@@ -63,6 +66,7 @@ public class UnitTest{
          CartPage cartPage = new CartPage(_driver);
          cartPage.ProceedToPayForProduct();
        }
+
        [Test]
        [Order(5)]
        public void FifthTest(){
