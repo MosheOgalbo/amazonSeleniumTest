@@ -13,15 +13,15 @@ namespace DotnetSeleniumTest.Pages
         // אתחול של דף התשלום
         public CheckoutPage(IWebDriver driver)
         {
-            _driver = driver;
-             ActionsInWeb actions = new ActionsInWeb(_driver);
+            this._driver = driver;
+             _actions = new ActionsInWeb(_driver);
 
         }
 
         // פונקציה לצילום מסך
         public void MakingPaymentForProduct()
         {
-        //    Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
+           //Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
             _actions.Screenshot();
         }
     }
