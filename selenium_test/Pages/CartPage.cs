@@ -27,7 +27,7 @@ namespace DotnetSeleniumTest.Pages
         // פונקציה לאימות כמות פריטי העגלה
         public  bool VerifyCart()
         {
-            _wait.WebScreenWait(byProductInCart);
+            _wait.UnitToElementIsClick(byProductInCart);
             string cartIconLogoText= CartIconLogo.Text;
             int numberItemsList=GetElements(byProductInCart).Count();
            // בדוק אם הטקסט אינו ריק

@@ -8,12 +8,11 @@ namespace DotnetSeleniumTest.Pages
     public  class HomePage
     {
         private readonly IWebDriver driver;
-          private readonly WaitDriver webScreenWait;
+          private readonly WaitDriver _wait;
         public HomePage(IWebDriver driver)
         {
             this.driver = driver;
-
-            // _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _wait = new WaitDriver(this.driver);
         }
        private IWebElement SearchBox => driver.FindElement(By.Id("twotabsearchtextbox"));
        private IWebElement SearchButton => driver.FindElement(By.Id("nav-search-submit-button"));
@@ -22,10 +21,13 @@ namespace DotnetSeleniumTest.Pages
         // חיפוש מוצר לפי מונח חיפוש
         public void SearchForItem(string item)
         {
-            WaitDriver waitDriver = new WaitDriver(driver);
-            waitDriver.WebScreenWait(bySearchBox);
+             _wait.UnitToElementIsClick(bySearchBox);
+            // WaitDriver waitDriver = new WaitDriver(driver);
+             _wait.UnitToElementIsClick(bySearchBox);
             SearchBox.EnterText(item);
             SearchButton.ClickInElement();
+            _wait.UnitToElementIsClick(bySearchBox);
+
         }
 
     }

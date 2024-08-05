@@ -34,7 +34,7 @@ public class UnitTest{
      public void FirstTest(){
         HomePage homesPage = new HomePage(_driver);
         homesPage.SearchForItem(_itemSearch);
-        _actions.Screenshot();
+        //_actions.Screenshot();
        }
        [Test]
      public void SecondTest(){
@@ -43,7 +43,6 @@ public class UnitTest{
            searchResultsPage.ApplyFilters();
            //מחזיר 10 פרטים
             _productLinks = searchResultsPage.CollectProductLinksTopNen();
-        //    FileService fileService = new FileService();
            fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
        }
        [Test]
@@ -52,8 +51,13 @@ public class UnitTest{
         productPage.NavigateProductPage(_productLinks);
         List<DotnetSeleniumTest.ItemReviewModel> reviewModels = productPage.GetAllReviews();
         fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
+       }
+       [Test]
+       public void FourthTest(){
+         ProductPage productPage = new ProductPage(_driver);
+         productPage.AddProductToCart();
+         //CartPage cartPage = new CartPage(_driver);
 
-        // _actions.Screenshot();
        }
     [TearDown]
     public void DownTest() {
@@ -62,6 +66,6 @@ public class UnitTest{
 
     [OneTimeTearDown]
     public void OneTimeTearDown(){
-        Driver.Cleanup(_driver);
+        //Driver.Cleanup(_driver);
     }
 }

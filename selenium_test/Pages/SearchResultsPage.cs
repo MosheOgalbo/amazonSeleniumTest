@@ -8,8 +8,10 @@ namespace DotnetSeleniumTest.Pages
     public class SearchResultsPage
     {
         private readonly IWebDriver? driver;
+        private readonly  WaitDriver _waitElement ;
         public SearchResultsPage(IWebDriver driver){
             this.driver = driver;
+            _waitElement= new WaitDriver(driver);
         }
 
         // מגדירים את האלמנטים שצריך לאתר בדף תוצאות החיפוש
@@ -17,7 +19,8 @@ namespace DotnetSeleniumTest.Pages
           // מגדירים את האלמנטים שצריך לאתר בדף תוצאות החיפוש
          private By lowerBoundSlider => By.Id("p_36/range-slider_slider-item_lower-bound-slider");
          private By upperBoundSlider => By.Id("p_36/range-slider_slider-item_upper-bound-slider");
-          By memoryFilter => By.XPath("//span[contains(text(), '16 GB')]");
+         private By byMemoryFilter => By.XPath("//div//span[contains(text(),'16 GB')]");
+
           By ratingFilter => By.XPath("//span[contains(text(),'4 Stars & Up')]");
           By byButtonFilter => By.XPath("//*[contains(@class,'sf-submit-range-button')]");
           By byProductCard => By.XPath("//*[contains(@class,'gsx-ies-anchor')]");
@@ -29,7 +32,7 @@ namespace DotnetSeleniumTest.Pages
         public void AdjustSlider(int upperBoundValue)
         {
             // המתנה לטעינת הסליידר
-            Thread.Sleep(2000);
+            Thread.Sleep(200);
             // קבלת אלמנט הסליידר
             IWebElement slider = GetElement(upperBoundSlider);
             // קבלת רוחב הסליידר
@@ -49,17 +52,18 @@ namespace DotnetSeleniumTest.Pages
         }
     // סינון תוצאות חיפוש לפי קריטריונים
         public void ApplyFilters(){
-            ActionsInWeb actionsInWeb = new ActionsInWeb(driver);
-            WaitDriver webScreenWait = new WaitDriver(driver);
-            webScreenWait.WebScreenWait(memoryFilter);
-            actionsInWeb.Screenshot();
-            GetElement(memoryFilter).ClickInElement();
-            webScreenWait.WebScreenWait(priceFilter);
+           // ActionsInWeb actionsInWeb = new ActionsInWeb(driver);
+            //WaitDriver waitElement = new WaitDriver(driver);
+            _waitElement.UnitToElementIsClick(byProductCard);
+            _waitElement.UnitToElementIsClick(byMemoryFilter);
+            // actionsInWeb.Screenshot();
+            GetElement(byMemoryFilter).ClickInElement();
+            _waitElement.UnitToElementIsClick(priceFilter);
             AdjustSlider(49);
-            actionsInWeb.Screenshot();
-            webScreenWait.WebScreenWait(priceFilter);
+            //actionsInWeb.Screenshot();
+            _waitElement.UnitToElementIsClick(priceFilter);
             GetElement(byButtonFilter).ClickInElement();
-            webScreenWait.WebScreenWait(byButtonFilter);
+            _waitElement.UnitToElementIsClick(byButtonFilter);
         }
 
         // איסוף קישורים של מוצרים

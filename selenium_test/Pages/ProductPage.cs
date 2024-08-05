@@ -8,17 +8,18 @@ namespace DotnetSeleniumTest.Pages
     public class ProductPage
     {
         private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
-
+        private readonly WaitDriver _wait;
         // אתחול של דף המוצר
         public ProductPage(IWebDriver driver)
         {
             _driver = driver;
-            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _wait = new WaitDriver(_driver);
         }
       private By byCustomerReviews => By.XPath("//*[contains(@id,'customer_review')]");
-      private By byElementReviewerName=>By.XPath("//span [@class='a-profile-name']");
-      private By byElementReviewText=>By.XPath("//div[contains(@class,'reviewText')]");
+      private By byReviewerName=>By.XPath("//span [@class='a-profile-name']");
+      private By byReviewText=>By.XPath("//div[contains(@class,'reviewText')]");
+      private By  byAddProductCartButton => By.Id("add-to-cart-button");
+      private By byProductCartIcon => By.Id("nav-cart-count-container");
       private IWebElement GetElement(By by) => _driver.FindElement(by);
       private IReadOnlyList <IWebElement> GetElements(By by) => _driver.FindElements(by);
 
@@ -36,8 +37,8 @@ namespace DotnetSeleniumTest.Pages
 
             IReadOnlyList<IWebElement> reviewsElement = GetElements(byCustomerReviews);
             foreach (IWebElement review in reviewsElement){
-               IWebElement  reviewerNameElement = review.FindElement(byElementReviewerName);
-               IWebElement reviewTextElement = review.FindElement(byElementReviewText);
+               IWebElement  reviewerNameElement = review.FindElement(byReviewerName);
+               IWebElement reviewTextElement = review.FindElement(byReviewText);
                  // מציאת שם המבקר
             //      string reviewerName = reviewerNameElement.Text;
             // // מציאת טקסט הביקורת
@@ -51,6 +52,14 @@ namespace DotnetSeleniumTest.Pages
             }
             return reviews;
 
+        }
+
+        //מעבר למסך הוספה מוצר זה
+        public void AddProductToCart()
+        {
+            _wait.UnitToElementIsClick(byAddProductCartButton).Click();
+            _wait.UntilElementIsRemoved(byAddProductCartButton);
+            _wait.UnitToElementIsClick(byProductCartIcon).Click();
         }
     }
 }

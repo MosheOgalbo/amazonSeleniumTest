@@ -16,7 +16,7 @@ namespace DotnetSeleniumTest.Driver
             TransitionBrowser(driver, url);
             driver.Navigate().Refresh();
             Thread.Sleep(2000);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             //   if(driver.Url==url){
             //     Cleanup(driver);
             //     return driver;
