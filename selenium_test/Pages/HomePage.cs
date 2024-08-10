@@ -12,7 +12,8 @@ namespace DotnetSeleniumTest.Pages
         public HomePage(IWebDriver driver)
         {
             this.driver = driver;
-            _wait = new WaitDriver(this.driver);
+            //_wait = new WaitDriver(this.driver);
+            _wait = new WaitDriver();
         }
        private IWebElement SearchBox => driver.FindElement(By.Id("twotabsearchtextbox"));
        private IWebElement SearchButton => driver.FindElement(By.Id("nav-search-submit-button"));

@@ -14,7 +14,7 @@ namespace DotnetSeleniumTest.Pages
         public CheckoutPage(IWebDriver driver)
         {
             this._driver = driver;
-             _actions = new ActionsInWeb(_driver);
+             _actions = new ActionsInWeb();
 
         }
 

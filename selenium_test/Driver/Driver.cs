@@ -3,9 +3,9 @@ using OpenQA.Selenium.Chrome;
 
 namespace DotnetSeleniumTest.Driver
 {
-    public static class Driver
+    public  class Driver
     {
-        //  private static readonly IWebDriver? _driver;
+         public  static IWebDriver? webDriver;
         // private  static readonly WebDriverWait? wait;
         // יצירת WebDriver עבור Chrome
         public static IWebDriver Initialize(string url)
@@ -23,6 +23,7 @@ namespace DotnetSeleniumTest.Driver
             //     }else{
             //         return driver;
                 //}
+            webDriver=driver;
             return driver;
         }
 

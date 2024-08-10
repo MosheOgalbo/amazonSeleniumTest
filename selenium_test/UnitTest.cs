@@ -20,7 +20,7 @@ public class UnitTest{
        [OneTimeSetUp]
        public void OneTimeSetUp(){
             _driver = Driver.Initialize("https://www.amazon.com/");
-            _actions = new ActionsInWeb(_driver);
+            _actions = new ActionsInWeb();
         }
 
        [SetUp]

@@ -13,7 +13,8 @@ namespace DotnetSeleniumTest.Pages
         public ProductPage(IWebDriver driver)
         {
             _driver = driver;
-            _wait = new WaitDriver(_driver);
+            //_wait = new WaitDriver(_driver);
+            _wait = new WaitDriver();
         }
       private By byCustomerReviews => By.XPath("//*[contains(@id,'customer_review')]");
       private By byReviewerName=>By.XPath("//span [@class='a-profile-name']");

@@ -4,10 +4,10 @@ using NUnit.Framework;
 
 namespace DotnetSeleniumTest.Driver
 {
-    public  class ActionsInWeb{
+    public  class ActionsInWeb:Driver{
         private readonly IWebDriver? driver;
-          public  ActionsInWeb( IWebDriver driver){
-            this.driver = driver;
+          public  ActionsInWeb( ){
+            this.driver = webDriver;
         }
         public void Screenshot(){
             try{

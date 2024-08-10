@@ -11,7 +11,8 @@ namespace DotnetSeleniumTest.Pages
         private readonly  WaitDriver _waitElement ;
         public SearchResultsPage(IWebDriver driver){
             this.driver = driver;
-            _waitElement= new WaitDriver(driver);
+            //_waitElement= new WaitDriver(driver);
+            _waitElement= new WaitDriver();
         }
 
         // מגדירים את האלמנטים שצריך לאתר בדף תוצאות החיפוש

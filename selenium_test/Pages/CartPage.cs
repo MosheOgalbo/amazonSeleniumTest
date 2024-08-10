@@ -14,7 +14,8 @@ namespace DotnetSeleniumTest.Pages
         public CartPage(IWebDriver driver)
         {
             _driver = driver;
-             _wait = new WaitDriver(_driver);
+             //_wait = new WaitDriver(_driver);
+             _wait = new WaitDriver();
         }
 
         // רכיבים בדף
