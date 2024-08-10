@@ -4,16 +4,16 @@ using OpenQA.Selenium.Support.UI;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class CheckoutPage
+    public class CheckoutPage: Driver.Driver
     {
-        private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
-        private readonly ActionsInWeb _actions;
+        private readonly IWebDriver? _driver;
+        private readonly WebDriverWait? _wait;
+        private readonly ActionsInWeb? _actions;
 
         // אתחול של דף התשלום
-        public CheckoutPage(IWebDriver driver)
+        public CheckoutPage()
         {
-            this._driver = driver;
+            this._driver = webDriver;
              _actions = new ActionsInWeb();
 
         }

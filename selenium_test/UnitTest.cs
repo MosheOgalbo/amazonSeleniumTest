@@ -33,7 +33,7 @@ public class UnitTest{
        [Category("FirstTest")]
        [Order(1)]
        public void FirstTest(){
-        HomePage homesPage = new HomePage(_driver);
+        HomePage homesPage = new HomePage();
         homesPage.SearchForItem(_itemSearch);
         //_actions.Screenshot();
        }
@@ -42,7 +42,7 @@ public class UnitTest{
        [Order(2)]
        public void SecondTest(){
            //שמירה על הפרטים לפי הדרישה
-           SearchResultsPage  searchResultsPage = new SearchResultsPage(_driver);
+           SearchResultsPage  searchResultsPage = new SearchResultsPage();
            searchResultsPage.ApplyFilters();
            //מחזיר 10 פרטים
             _productLinks = searchResultsPage.CollectProductLinksTopNen();
@@ -52,7 +52,7 @@ public class UnitTest{
        [Test]
        [Order(3)]
        public void ThirdTest(){
-        ProductPage productPage = new ProductPage(_driver);
+        ProductPage productPage = new ProductPage();
         productPage.NavigateProductPage(_productLinks);
         List<DotnetSeleniumTest.ItemReviewModel> reviewModels = productPage.GetAllReviews();
         fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
@@ -61,16 +61,16 @@ public class UnitTest{
        [Test]
        [Order(4)]
        public void FourthTest(){
-         ProductPage productPage = new ProductPage(_driver);
+         ProductPage productPage = new ProductPage();
          productPage.AddProductToCart();
-         CartPage cartPage = new CartPage(_driver);
+         CartPage cartPage = new CartPage();
          cartPage.ProceedToPayForProduct();
        }
 
        [Test]
        [Order(5)]
        public void FifthTest(){
-        CheckoutPage checkoutPage = new CheckoutPage(_driver);
+        CheckoutPage checkoutPage = new CheckoutPage();
         checkoutPage.MakingPaymentForProduct();
        }
 

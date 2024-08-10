@@ -5,12 +5,12 @@ using DotnetSeleniumTest.Driver;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class SearchResultsPage
+    public class SearchResultsPage:Driver.Driver
     {
         private readonly IWebDriver? driver;
         private readonly  WaitDriver _waitElement ;
-        public SearchResultsPage(IWebDriver driver){
-            this.driver = driver;
+        public SearchResultsPage(){
+            this.driver = webDriver;
             //_waitElement= new WaitDriver(driver);
             _waitElement= new WaitDriver();
         }

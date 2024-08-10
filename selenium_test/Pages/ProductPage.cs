@@ -5,14 +5,14 @@ using DotnetSeleniumTest.Driver;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class ProductPage
+    public class ProductPage:Driver.Driver
     {
-        private readonly IWebDriver _driver;
+        private readonly IWebDriver? _driver;
         private readonly WaitDriver _wait;
         // אתחול של דף המוצר
-        public ProductPage(IWebDriver driver)
+        public ProductPage()
         {
-            _driver = driver;
+            _driver = webDriver;
             //_wait = new WaitDriver(_driver);
             _wait = new WaitDriver();
         }

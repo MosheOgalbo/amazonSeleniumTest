@@ -4,8 +4,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace selenium_test
 {
-    public static class SeleniumCustomMethods
-    {
+    public static class SeleniumCustomMethods {
         public static void ClickInElement(this IWebElement locator){
             try{
                 locator.Click();

@@ -5,13 +5,13 @@ using selenium_test;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public  class HomePage
+    public  class HomePage:Driver.Driver
     {
-        private readonly IWebDriver driver;
+        private readonly IWebDriver? driver;
           private readonly WaitDriver _wait;
-        public HomePage(IWebDriver driver)
+        public HomePage()
         {
-            this.driver = driver;
+            this.driver = webDriver;
             //_wait = new WaitDriver(this.driver);
             _wait = new WaitDriver();
         }

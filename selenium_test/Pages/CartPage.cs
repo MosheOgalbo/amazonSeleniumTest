@@ -1,19 +1,18 @@
 using DotnetSeleniumTest.Driver;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
+using selenium_test;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class CartPage
+  public class CartPage:Driver.Driver
     {
         private readonly IWebDriver _driver;
          private readonly WaitDriver _wait;
 
         // אתחול של דף העגלה
-        public CartPage(IWebDriver driver)
+        public CartPage()
         {
-            _driver = driver;
+           this._driver = webDriver;
              //_wait = new WaitDriver(_driver);
              _wait = new WaitDriver();
         }
@@ -56,7 +55,7 @@ namespace DotnetSeleniumTest.Pages
         // פונקציה להמשך לתשלום
         public void ProceedToCheckout()
         {
-            CheckoutButton.Click(); // לוחץ על כפתור ההמשך לתשלום
+            CheckoutButton.ClickInElement(); // לוחץ על כפתור ההמשך לתשלום
         }
 
         public void ProceedToPayForProduct()
