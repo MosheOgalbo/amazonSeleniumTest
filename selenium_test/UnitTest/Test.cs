@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using DotnetSeleniumTest.Pages;
-using AmazonAutomation.Services;
+using selenium_test.Services;
 
 namespace selenium_test.Tests{
 

@@ -7,10 +7,10 @@ namespace DotnetSeleniumTest.Pages
 {
     public class SearchResultsPage:Driver.Driver
     {
-        private readonly IWebDriver? driver;
+       // private readonly IWebDriver? _driver;
         private readonly  WaitDriver _waitElement ;
         public SearchResultsPage(){
-            this.driver = webDriver;
+            //this.driver = _driver;
             //_waitElement= new WaitDriver(driver);
             _waitElement= new WaitDriver();
         }

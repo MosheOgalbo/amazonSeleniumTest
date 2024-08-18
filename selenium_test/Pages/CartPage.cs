@@ -6,22 +6,22 @@ namespace DotnetSeleniumTest.Pages
 {
   public class CartPage:Driver.Driver
     {
-        private readonly IWebDriver? _driver;
+        //private readonly IWebDriver? driver;
          private readonly WaitDriver _wait;
 
         // אתחול של דף העגלה
         public CartPage()
         {
-           this._driver = webDriver;
+           //this._driver = Driver.Driver._driver;
              //_wait = new WaitDriver(_driver);
              _wait = new WaitDriver();
         }
 
         // רכיבים בדף
-        private IWebElement CartIconLogo => _driver.FindElement(By.Id("nav-cart")); // אייקון העגלה
-        private IWebElement CheckoutButton => _driver.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
+        private IWebElement CartIconLogo => Driver.Driver.driver.FindElement(By.Id("nav-cart")); // אייקון העגלה
+        private IWebElement CheckoutButton => Driver.Driver.driver.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
         private By byProductInCart => By.XPath("//*[@data-bundleitem='absent']");
-        private IReadOnlyList <IWebElement> GetElements(By by) => _driver.FindElements(by);
+        private IReadOnlyList <IWebElement> GetElements(By by) => Driver.Driver.driver.FindElements(by);
 
 
         // פונקציה לאימות כמות פריטי העגלה

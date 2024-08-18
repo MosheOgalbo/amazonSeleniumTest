@@ -1,6 +1,6 @@
 
 
-namespace AmazonAutomation.Services
+namespace selenium_test.Services
 {
 
     public class DataCheck

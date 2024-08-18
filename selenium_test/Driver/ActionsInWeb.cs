@@ -5,9 +5,9 @@ using NUnit.Framework;
 namespace DotnetSeleniumTest.Driver
 {
     public  class ActionsInWeb:Driver{
-        private readonly IWebDriver? driver;
+        //private readonly IWebDriver? driver;
           public  ActionsInWeb( ){
-            this.driver = webDriver;
+          //  this.driver = Driver.driver;
         }
         public void Screenshot(){
             try{

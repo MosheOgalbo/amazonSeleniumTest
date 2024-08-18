@@ -5,20 +5,20 @@ namespace DotnetSeleniumTest.Driver
 {
     public  class Driver
     {
-         public  static IWebDriver? webDriver;
+         public  static IWebDriver? driver;
         // private  static readonly WebDriverWait? wait;
         // יצירת WebDriver עבור Chrome
         public static IWebDriver Initialize(string url)
         {
-            webDriver = new ChromeDriver();
-            webDriver.Manage().Window.Maximize();
+            driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
             Thread.Sleep(5000);
-            TransitionBrowser(webDriver, url);
-            webDriver.Navigate().Refresh();
+            TransitionBrowser(driver, url);
+            driver.Navigate().Refresh();
             Thread.Sleep(2000);
-            webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             // Driver.webDriver = webDriver;
-            return webDriver;
+            return driver;
         }
 
         public static void TransitionBrowser(IWebDriver driver, string url){
@@ -32,9 +32,9 @@ namespace DotnetSeleniumTest.Driver
         }
         public static  void Cleanup()
         {
-            if (webDriver != null)
+            if (driver != null)
             {
-                webDriver.Quit();
+                driver.Quit();
             }
         }
     }

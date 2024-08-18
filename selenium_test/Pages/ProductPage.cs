@@ -1,18 +1,18 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using AmazonAutomation.Services;
+using selenium_test.Services;
 using DotnetSeleniumTest.Driver;
 
 namespace DotnetSeleniumTest.Pages
 {
     public class ProductPage:Driver.Driver
     {
-        private readonly IWebDriver? _driver;
+        //private readonly IWebDriver? _driver;
         private readonly WaitDriver _wait;
         // אתחול של דף המוצר
         public ProductPage()
         {
-            _driver = webDriver;
+            //_driver = Driver.Driver._driver;
             //_wait = new WaitDriver(_driver);
             _wait = new WaitDriver();
         }
@@ -21,13 +21,13 @@ namespace DotnetSeleniumTest.Pages
       private By byReviewText=>By.XPath("//div[contains(@class,'reviewText')]");
       private By  byAddProductCartButton => By.Id("add-to-cart-button");
       private By byProductCartIcon => By.Id("nav-cart-count-container");
-      private IWebElement GetElement(By by) => _driver.FindElement(by);
-      private IReadOnlyList <IWebElement> GetElements(By by) => _driver.FindElements(by);
+      private IWebElement GetElement(By by) => driver.FindElement(by);
+      private IReadOnlyList <IWebElement> GetElements(By by) => driver.FindElements(by);
 
 
         public  void NavigateProductPage(List<string> ProducList){
             if(DataCheck.IsDataEmpty(ProducList)){
-                Driver.Driver.TransitionBrowser(_driver, ProducList[0]);
+                Driver.Driver.TransitionBrowser(driver, ProducList[0]);
              }
         }
         // לוקח את כול הביקורות של המוצר

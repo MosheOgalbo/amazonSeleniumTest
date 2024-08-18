@@ -4,9 +4,9 @@ using OpenQA.Selenium.Support.UI;
 namespace DotnetSeleniumTest.Driver
 {
  public class WaitDriver:Driver {
-         private  readonly IWebDriver? driver;
+         //private  readonly IWebDriver? driver;
          public WaitDriver(){
-             this.driver = webDriver;
+             //this.driver = Driver.driver;
          }
 //  עד שאלמנט יוצג המתנה לחלון חדש
         public  IWebElement UnitToElementIsClick(By locator){
