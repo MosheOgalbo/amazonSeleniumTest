@@ -1,32 +1,29 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium;
 using DotnetSeleniumTest.Pages;
-using  DotnetSeleniumTest.Driver;
 using AmazonAutomation.Services;
 
-namespace selenium_test;
+namespace selenium_test.Tests{
 
-[TestFixture("laptop")]
-public class UnitTest{
-    private IWebDriver _driver;
-    private ActionsInWeb _actions;
+ [TestFixture("laptop")]
+public class TestMain:RunningTest{
+
+    FileService _fileService;
     private readonly string _itemSearch;
     private  List<string>  _productLinks ;
-    FileService fileService;
 
-      public UnitTest(string _itemSearch){
+
+      public TestMain(string _itemSearch){
         this._itemSearch = _itemSearch;
        }
-       [OneTimeSetUp]
+    [OneTimeSetUp]
        public void OneTimeSetUp(){
-            _driver = Driver.Initialize("https://www.amazon.com/");
-            _actions = new ActionsInWeb();
+          _fileService = new FileService();
         }
 
        [SetUp]
        public void Setup(){
         Console.WriteLine("nwe Setup");
-         fileService = new FileService();
+        _actions.Screenshot();
         }
 
        [Test]
@@ -35,7 +32,6 @@ public class UnitTest{
        public void FirstTest(){
         HomePage homesPage = new HomePage();
         homesPage.SearchForItem(_itemSearch);
-        //_actions.Screenshot();
        }
 
        [Test]
@@ -46,7 +42,7 @@ public class UnitTest{
            searchResultsPage.ApplyFilters();
            //מחזיר 10 פרטים
             _productLinks = searchResultsPage.CollectProductLinksTopNen();
-           fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
+           _fileService.SaveLinksToJsonFile(_productLinks,"../../../TestLinks.json");
        }
 
        [Test]
@@ -55,7 +51,7 @@ public class UnitTest{
         ProductPage productPage = new ProductPage();
         productPage.NavigateProductPage(_productLinks);
         List<DotnetSeleniumTest.ItemReviewModel> reviewModels = productPage.GetAllReviews();
-        fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
+        _fileService.SaveReviewsToJsonFile(reviewModels,"../../../TestReviews.json");
        }
 
        [Test]
@@ -78,9 +74,9 @@ public class UnitTest{
     public void DownTest() {
         _actions.Screenshot();
     }
-
-    [OneTimeTearDown]
-    public void OneTimeTearDown(){
-        Driver.Cleanup(_driver);
+        [OneTimeTearDown]
+      public void OneTimeTearDown(){
+        _actions.Screenshot();
     }
+}
 }

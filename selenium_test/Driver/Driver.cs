@@ -10,21 +10,15 @@ namespace DotnetSeleniumTest.Driver
         // יצירת WebDriver עבור Chrome
         public static IWebDriver Initialize(string url)
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
+            webDriver = new ChromeDriver();
+            webDriver.Manage().Window.Maximize();
             Thread.Sleep(5000);
-            TransitionBrowser(driver, url);
-            driver.Navigate().Refresh();
+            TransitionBrowser(webDriver, url);
+            webDriver.Navigate().Refresh();
             Thread.Sleep(2000);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            //   if(driver.Url==url){
-            //     Cleanup(driver);
-            //     return driver;
-            //     }else{
-            //         return driver;
-                //}
-            webDriver=driver;
-            return driver;
+            webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            // Driver.webDriver = webDriver;
+            return webDriver;
         }
 
         public static void TransitionBrowser(IWebDriver driver, string url){
@@ -36,11 +30,11 @@ namespace DotnetSeleniumTest.Driver
                  throw new NotImplementedException();
             }
         }
-        public static  void Cleanup(IWebDriver driver)
+        public static  void Cleanup()
         {
-            if (driver != null)
+            if (webDriver != null)
             {
-                driver.Quit();
+                webDriver.Quit();
             }
         }
     }
