@@ -5,14 +5,14 @@ using AmazonAutomation.Services;
 namespace selenium_test.Tests{
 
  [TestFixture("laptop")]
-public class AmazonShoppingTests:RunningTest{
+public class AmazonShoppingJourneyTests:RunningTest{
 
     FileService _fileService;
     private readonly string _itemSearch;
     private  List<string>  _productLinks ;
 
 
-      public AmazonShoppingTests(string _itemSearch){
+      public AmazonShoppingJourneyTests(string _itemSearch){
         this._itemSearch = _itemSearch;
        }
     [OneTimeSetUp]
