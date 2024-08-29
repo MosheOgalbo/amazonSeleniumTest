@@ -3,9 +3,9 @@ using OpenQA.Selenium.Chrome;
 
 namespace DotnetSeleniumTest.Driver
 {
-    public  class Driver
+    public class Driver
     {
-         public  static IWebDriver? driver;
+        public static IWebDriver? driver;
         // private  static readonly WebDriverWait? wait;
         // יצירת WebDriver עבור Chrome
         public static IWebDriver Initialize(string url)
@@ -21,16 +21,20 @@ namespace DotnetSeleniumTest.Driver
             return driver;
         }
 
-        public static void TransitionBrowser(IWebDriver driver, string url){
-            try{
+        public static void TransitionBrowser(IWebDriver driver, string url)
+        {
+            try
+            {
                 driver.Navigate().GoToUrl(url);
 
-            }catch(Exception e){
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
-                 throw new NotImplementedException();
+                throw new NotImplementedException();
             }
         }
-        public static  void Cleanup()
+        public static void Cleanup()
         {
             if (driver != null)
             {

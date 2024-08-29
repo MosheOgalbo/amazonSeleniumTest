@@ -1,32 +1,47 @@
 using NUnit.Framework;
-using OpenQA.Selenium;
 using DotnetSeleniumTest.Driver;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+using NUnit.Framework.Interfaces;
+using AventStack.ExtentReports.MarkupUtils;
+
+
 
 namespace selenium_test;
 
 //[SetUpFixture]
-public class RunningTest{
-
+public class RunningTest
+{
     //public IWebDriver _driver;
-    public ActionsInWeb _actions;
+    protected ExtentReports? _extent;
+    protected ExtentTest? _test;
+    public ActionsInWeb? _actions;
 
-     [OneTimeSetUp]
-     public void GlobalSetup(){
+
+    [OneTimeSetUp]
+    public void GlobalSetup()
+    {
         Driver.Initialize("https://www.amazon.com/");
         _actions = new ActionsInWeb();
+        _extent = new ExtentReports();
+        var spark = new ExtentSparkReporter("Spark.html");
+        _extent.AttachReporter(spark);
 
-        }
 
-        // [Test]
-        // public void RunUnitTest1()
-        // {
-        //     new TestMain("laptop");
 
-        // }
-         [OneTimeTearDown]
-        public void GlobalTeardown(){
-           Driver.Cleanup();
 
-        }
+    }
 
+    [OneTimeTearDown]
+    public void GlobalTeardown()
+    {
+        Driver.Cleanup();
+
+        // try{
+        //     _extent.Flush();
+        //     }
+        // catch (Exception ex){
+        //     Console.WriteLine(ex.ToString());
+        //     }
+    }
 }

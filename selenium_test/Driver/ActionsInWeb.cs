@@ -4,35 +4,42 @@ using NUnit.Framework;
 
 namespace DotnetSeleniumTest.Driver
 {
-    public  class ActionsInWeb:Driver{
+    public class ActionsInWeb : Driver
+    {
         //private readonly IWebDriver? driver;
-          public  ActionsInWeb( ){
-          //  this.driver = Driver.driver;
+        public ActionsInWeb()
+        {
+            //  this.driver = Driver.driver;
         }
-        public void Screenshot(){
-            try{
+        public void Screenshot()
+        {
+            try
+            {
 
                 Thread.Sleep(100);
                 string screenshotDirectory = "../../../Pngs";
-                    // בדיקה אם התיקייה קיימת, אם לא - יצירת התיקייה
-                if (!Directory.Exists(screenshotDirectory)){
-                        Directory.CreateDirectory(screenshotDirectory);
-                    }
+                // בדיקה אם התיקייה קיימת, אם לא - יצירת התיקייה
+                if (!Directory.Exists(screenshotDirectory))
+                {
+                    Directory.CreateDirectory(screenshotDirectory);
+                }
 
-                    // יצירת שם קובץ ייחודי עם תאריך ושעה
-                    string fileName = $"screenshot_{DateTime.Now:yyyyMMdd_HHmmss}.png";
-                    string screenshotPath = Path.Combine(screenshotDirectory, fileName);
+                // יצירת שם קובץ ייחודי עם תאריך ושעה
+                string fileName = $"screenshot_{DateTime.Now:yyyyMMdd_HHmmss}.png";
+                string screenshotPath = Path.Combine(screenshotDirectory, fileName);
 
-                    Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
 
-                    screenshot.SaveAsFile(screenshotPath);
-                    TestContext.WriteLine($"Screenshot saved at: {screenshotPath}");
+                screenshot.SaveAsFile(screenshotPath);
+                TestContext.WriteLine($"Screenshot saved at: {screenshotPath}");
 
-                    // הוספת הצילום מסך כקובץ מצורף לתוצאות הבדיקה
-                    TestContext.AddTestAttachment(screenshotPath);
-                    Thread.Sleep(1000);
+                // הוספת הצילום מסך כקובץ מצורף לתוצאות הבדיקה
+                TestContext.AddTestAttachment(screenshotPath);
+                Thread.Sleep(1000);
 
-            }catch(Exception e){
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
             }
         }

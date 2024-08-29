@@ -55,7 +55,7 @@ namespace DotnetSeleniumTest.Pages
         public void ApplyFilters(){
            // ActionsInWeb actionsInWeb = new ActionsInWeb(driver);
             //WaitDriver waitElement = new WaitDriver(driver);
-            _waitElement.UnitToElementIsClick(byProductCard);
+           // _waitElement.UnitToElementIsClick(byProductCard);
             _waitElement.UnitToElementIsClick(byMemoryFilter);
             // actionsInWeb.Screenshot();
             GetElement(byMemoryFilter).ClickInElement();

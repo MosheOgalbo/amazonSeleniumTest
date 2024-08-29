@@ -10,6 +10,11 @@
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.42.5" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core" Version="4.14.1" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
+    <PackageReference Include="extent" Version="0.0.3" />
+    <PackageReference Include="ExtentReports" Version="5.0.4" />
+    <PackageReference Include="ExtentReports-custom-package" Version="5.0.4" />
+    <PackageReference Include="ExtentReports.BugFix" Version="4.2.3" />
+    <PackageReference Include="ExtentReports.Core" Version="1.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.0-release-24352-06" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
