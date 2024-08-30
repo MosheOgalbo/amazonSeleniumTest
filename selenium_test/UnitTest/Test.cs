@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using DotnetSeleniumTest.Pages;
 using selenium_test.Services;
+using NUnit.Framework.Interfaces;
 
 namespace selenium_test.Tests
 {
@@ -9,9 +10,9 @@ namespace selenium_test.Tests
     public class AmazonShoppingJourneyTests : RunningTest
     {
 
-        public FileService _fileService;
-        private readonly string _itemSearch;
-        private List<string> _productLinks;
+        public FileService? _fileService;
+        private readonly string? _itemSearch;
+        private List<string>? _productLinks;
 
         public AmazonShoppingJourneyTests(string _itemSearch)
         {
@@ -27,7 +28,9 @@ namespace selenium_test.Tests
         public void Setup()
         {
             Console.WriteLine("nwe Setup");
-            _actions.Screenshot();
+            _actions?.Screenshot();
+            _test = _extent?.CreateTest(TestContext.CurrentContext.Test.Name);
+
 
         }
 
@@ -37,7 +40,7 @@ namespace selenium_test.Tests
         public void FirstTest()
         {
             HomePage homesPage = new HomePage();
-            homesPage.SearchForItem(_itemSearch);
+            homesPage.SearchForItem(_itemSearch!);
         }
 
         [Test]
@@ -49,7 +52,7 @@ namespace selenium_test.Tests
             searchResultsPage.ApplyFilters();
             //מחזיר 10 פרטים
             _productLinks = searchResultsPage.CollectProductLinksTopNen();
-            _fileService.SaveLinksToJsonFile(_productLinks, "../../../TestLinks.json");
+            _fileService?.SaveLinksToJsonFile(_productLinks, "../../../TestLinks.json");
         }
 
         [Test]
@@ -57,9 +60,9 @@ namespace selenium_test.Tests
         public void ThirdTest()
         {
             ProductPage productPage = new ProductPage();
-            productPage.NavigateProductPage(_productLinks);
+            productPage.NavigateProductPage(_productLinks!);
             List<DotnetSeleniumTest.ItemReviewModel> reviewModels = productPage.GetAllReviews();
-            _fileService.SaveReviewsToJsonFile(reviewModels, "../../../TestReviews.json");
+            _fileService?.SaveReviewsToJsonFile(reviewModels, "../../../TestReviews.json");
         }
 
         [Test]
@@ -83,14 +86,34 @@ namespace selenium_test.Tests
         [TearDown]
         public void DownTest()
         {
-            _actions.Screenshot();
+            _actions?.Screenshot();
 
+            var status = TestContext.CurrentContext.Result.Outcome.Status;
+            var errorMessage = TestContext.CurrentContext.Result.Message;
+            var stackTrace = TestContext.CurrentContext.Result.StackTrace;
+
+            if (status == TestStatus.Failed)
+            {
+                _test?.Fail($"Test Failed: {errorMessage}");
+                if (!string.IsNullOrEmpty(stackTrace))
+                {
+                    _test?.Log(AventStack.ExtentReports.Status.Fail, $"Stack Trace: {stackTrace}");
+                }
+            }
+            else if (status == TestStatus.Passed)
+            {
+                _test?.Pass("Test Passed");
+            }
+            else
+            {
+                _test?.Skip("Test Skipped");
+            }
 
         }
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
-            _actions.Screenshot();
+            _actions?.Screenshot();
         }
     }
 }

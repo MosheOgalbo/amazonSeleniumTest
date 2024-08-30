@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using DotnetSeleniumTest.Driver;
+using DotnetSeleniumTest.Browser;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using NUnit.Framework.Interfaces;
@@ -21,11 +21,12 @@ public class RunningTest
     [OneTimeSetUp]
     public void GlobalSetup()
     {
-        Driver.Initialize("https://www.amazon.com/");
+        DriverTest.Initialize("https://www.amazon.com/");
         _actions = new ActionsInWeb();
+
+        var htmlReporter = new ExtentSparkReporter("../ExtentReport.html");
         _extent = new ExtentReports();
-        var spark = new ExtentSparkReporter("Spark.html");
-        _extent.AttachReporter(spark);
+        _extent.AttachReporter(htmlReporter);
 
 
 
@@ -35,13 +36,8 @@ public class RunningTest
     [OneTimeTearDown]
     public void GlobalTeardown()
     {
-        Driver.Cleanup();
+        DriverTest.Cleanup();
+        _extent?.Flush();
 
-        // try{
-        //     _extent.Flush();
-        //     }
-        // catch (Exception ex){
-        //     Console.WriteLine(ex.ToString());
-        //     }
     }
 }

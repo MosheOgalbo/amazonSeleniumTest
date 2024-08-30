@@ -2,14 +2,14 @@
 using OpenQA.Selenium;
 using NUnit.Framework;
 
-namespace DotnetSeleniumTest.Driver
+namespace DotnetSeleniumTest.Browser
 {
-    public class ActionsInWeb : Driver
+    public class ActionsInWeb : DriverTest
     {
-        //private readonly IWebDriver? driver;
+        private readonly IWebDriver? _driver;
         public ActionsInWeb()
         {
-            //  this.driver = Driver.driver;
+            this._driver = Browser.DriverTest.driver;
         }
         public void Screenshot()
         {
@@ -28,7 +28,7 @@ namespace DotnetSeleniumTest.Driver
                 string fileName = $"screenshot_{DateTime.Now:yyyyMMdd_HHmmss}.png";
                 string screenshotPath = Path.Combine(screenshotDirectory, fileName);
 
-                Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                Screenshot screenshot = ((ITakesScreenshot)_driver!).GetScreenshot();
 
                 screenshot.SaveAsFile(screenshotPath);
                 TestContext.WriteLine($"Screenshot saved at: {screenshotPath}");

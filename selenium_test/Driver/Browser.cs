@@ -1,9 +1,9 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace DotnetSeleniumTest.Driver
+namespace DotnetSeleniumTest.Browser
 {
-    public class Driver
+    public class DriverTest
     {
         public static IWebDriver? driver;
         // private  static readonly WebDriverWait? wait;
@@ -13,7 +13,7 @@ namespace DotnetSeleniumTest.Driver
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             Thread.Sleep(5000);
-            TransitionBrowser(driver, url);
+            TransitionBrowser(url);
             driver.Navigate().Refresh();
             Thread.Sleep(2000);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
@@ -21,11 +21,11 @@ namespace DotnetSeleniumTest.Driver
             return driver;
         }
 
-        public static void TransitionBrowser(IWebDriver driver, string url)
+        public static void TransitionBrowser(string url)
         {
             try
             {
-                driver.Navigate().GoToUrl(url);
+                driver?.Navigate().GoToUrl(url);
 
             }
             catch (Exception e)

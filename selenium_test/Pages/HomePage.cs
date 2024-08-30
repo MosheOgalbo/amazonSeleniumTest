@@ -1,11 +1,11 @@
-using DotnetSeleniumTest.Driver;
+using DotnetSeleniumTest.Browser;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using selenium_test;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class HomePage : Driver.Driver
+    public class HomePage : Browser.DriverTest
     {
         //private readonly IWebDriver? _driver;
         private readonly WaitDriver _wait;
@@ -15,9 +15,9 @@ namespace DotnetSeleniumTest.Pages
             //_wait = new WaitDriver(this.driver);
             _wait = new WaitDriver();
         }
-        private IWebElement SearchBox => driver.FindElement(By.Id("twotabsearchtextbox"));
-        private IWebElement SearchButton => driver.FindElement(By.Id("nav-search-submit-button"));
         private By bySearchBox => By.Id("twotabsearchtextbox");
+        private IWebElement SearchBox => Browser.DriverTest.driver!.FindElement(bySearchBox);
+        private IWebElement SearchButton => Browser.DriverTest.driver!.FindElement(By.Id("nav-search-submit-button"));
 
         // חיפוש מוצר לפי מונח חיפוש
         public void SearchForItem(string item)

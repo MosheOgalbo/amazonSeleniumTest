@@ -1,9 +1,9 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace DotnetSeleniumTest.Driver
+namespace DotnetSeleniumTest.Browser
 {
-    public class WaitDriver : Driver
+    public class WaitDriver : DriverTest
     {
         //private  readonly IWebDriver? driver;
         public WaitDriver()
@@ -11,15 +11,32 @@ namespace DotnetSeleniumTest.Driver
             //this.driver = Driver.driver;
         }
         //  עד שאלמנט יוצג המתנה לחלון חדש
-        public IWebElement UnitToElementIsClick(By locator)
+        public IWebElement? UnitToElementIsClick(By locator)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                var req = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+                if (req != null) return req;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return null;
         }
         public bool UntilElementIsRemoved(By locator)
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(locator));
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(locator));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
         }
 
 

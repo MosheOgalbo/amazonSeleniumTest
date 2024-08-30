@@ -1,10 +1,10 @@
-using DotnetSeleniumTest.Driver;
+using DotnetSeleniumTest.Browser;
 using OpenQA.Selenium;
 using selenium_test;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class CartPage : Driver.Driver
+    public class CartPage : Browser.DriverTest
     {
         //private readonly IWebDriver? driver;
         private readonly WaitDriver _wait;
@@ -18,10 +18,10 @@ namespace DotnetSeleniumTest.Pages
         }
 
         // רכיבים בדף
-        private IWebElement CartIconLogo => Driver.Driver.driver.FindElement(By.Id("nav-cart")); // אייקון העגלה
-        private IWebElement CheckoutButton => Driver.Driver.driver.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
+        private IWebElement CartIconLogo => Browser.DriverTest.driver!.FindElement(By.Id("nav-cart")); // אייקון העגלה
+        private IWebElement CheckoutButton => Browser.DriverTest.driver!.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
         private By byProductInCart => By.XPath("//*[@data-bundleitem='absent']");
-        private IReadOnlyList<IWebElement> GetElements(By by) => Driver.Driver.driver.FindElements(by);
+        private IReadOnlyList<IWebElement> GetElements(By by) => Browser.DriverTest.driver!.FindElements(by);
 
 
         // פונקציה לאימות כמות פריטי העגלה
@@ -64,7 +64,7 @@ namespace DotnetSeleniumTest.Pages
 
         public void ProceedToPayForProduct()
         {
-            _wait.UnitToElementIsClick(byProductInCart).Click();
+            _wait.UnitToElementIsClick(byProductInCart)?.Click();
             if (VerifyCart())
             {
                 Console.WriteLine("Payment can be continued");

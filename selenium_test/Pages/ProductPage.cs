@@ -1,18 +1,18 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using selenium_test.Services;
-using DotnetSeleniumTest.Driver;
+using DotnetSeleniumTest.Browser;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class ProductPage : Driver.Driver
+    public class ProductPage : Browser.DriverTest
     {
-        //private readonly IWebDriver? _driver;
+        private readonly IWebDriver? _driver;
         private readonly WaitDriver _wait;
         // אתחול של דף המוצר
         public ProductPage()
         {
-            //_driver = Driver.Driver._driver;
+            _driver = Browser.DriverTest.driver;
             //_wait = new WaitDriver(_driver);
             _wait = new WaitDriver();
         }
@@ -21,15 +21,15 @@ namespace DotnetSeleniumTest.Pages
         private By byReviewText => By.XPath("//div[contains(@class,'reviewText')]");
         private By byAddProductCartButton => By.Id("add-to-cart-button");
         private By byProductCartIcon => By.Id("nav-cart-count-container");
-        private IWebElement GetElement(By by) => driver.FindElement(by);
-        private IReadOnlyList<IWebElement> GetElements(By by) => driver.FindElements(by);
+        private IWebElement GetElement(By by) => _driver!.FindElement(by);
+        private IReadOnlyList<IWebElement> GetElements(By by) => _driver!.FindElements(by);
 
 
         public void NavigateProductPage(List<string> ProducList)
         {
             if (DataCheck.IsDataEmpty(ProducList))
             {
-                Driver.Driver.TransitionBrowser(driver, ProducList[0]);
+                Browser.DriverTest.TransitionBrowser(ProducList[0]);
             }
         }
         // לוקח את כול הביקורות של המוצר
@@ -61,9 +61,9 @@ namespace DotnetSeleniumTest.Pages
         //מעבר למסך הוספה מוצר זה
         public void AddProductToCart()
         {
-            _wait.UnitToElementIsClick(byAddProductCartButton).Click();
+            _wait.UnitToElementIsClick(byAddProductCartButton)?.Click();
             _wait.UntilElementIsRemoved(byAddProductCartButton);
-            _wait.UnitToElementIsClick(byProductCartIcon).Click();
+            _wait.UnitToElementIsClick(byProductCartIcon)?.Click();
         }
     }
 }

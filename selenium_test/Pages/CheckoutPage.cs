@@ -1,13 +1,13 @@
-using DotnetSeleniumTest.Driver;
+using DotnetSeleniumTest.Browser;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class CheckoutPage : Driver.Driver
+    public class CheckoutPage : Browser.DriverTest
     {
         //private readonly IWebDriver? _driver;
-        private readonly WebDriverWait? _wait;
+        //private readonly WebDriverWait? _wait;
         private readonly ActionsInWeb? _actions;
 
         // אתחול של דף התשלום
@@ -22,7 +22,7 @@ namespace DotnetSeleniumTest.Pages
         public void MakingPaymentForProduct()
         {
             //Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
-            _actions.Screenshot();
+            _actions?.Screenshot();
         }
     }
 }
