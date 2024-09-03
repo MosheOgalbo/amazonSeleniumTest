@@ -44,6 +44,12 @@ namespace DotnetSeleniumTest.Browser
             }
         }
 
+        public string GetScreenshot()
+        {
+            var file = ((ITakesScreenshot)_driver!).GetScreenshot();
+            var img = file.AsBase64EncodedString;
+            return img;
+        }
         internal object ClickAndHold(IWebElement priceFilter)
         {
             throw new NotImplementedException();

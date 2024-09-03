@@ -29,7 +29,7 @@ namespace DotnetSeleniumTest.Pages
         {
             if (DataCheck.IsDataEmpty(ProducList))
             {
-                Browser.DriverTest.TransitionBrowser(ProducList[0]);
+                TransitionBrowser(ProducList[0]);
             }
         }
         // לוקח את כול הביקורות של המוצר

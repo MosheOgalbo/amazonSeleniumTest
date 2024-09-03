@@ -13,9 +13,10 @@ namespace DotnetSeleniumTest.Browser
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             Thread.Sleep(5000);
+            RefreshDriver();
             TransitionBrowser(url);
-            driver.Navigate().Refresh();
-            Thread.Sleep(2000);
+            RefreshDriver();
+            Thread.Sleep(5000);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             // Driver.webDriver = webDriver;
             return driver;
@@ -34,6 +35,7 @@ namespace DotnetSeleniumTest.Browser
                 throw new NotImplementedException();
             }
         }
+
         public static void Cleanup()
         {
             if (driver != null)
@@ -41,5 +43,32 @@ namespace DotnetSeleniumTest.Browser
                 driver.Quit();
             }
         }
+
+        public static void RefreshDriver()
+        {
+            driver?.Navigate().Refresh();
+            Thread.Sleep(100);
+        }
+
+        public static IWebElement? GetElementIfExists(By by)
+        {
+            try
+            {
+                IWebElement webElement = driver!.FindElement(by);
+                return webElement;
+
+            }
+            catch (NoSuchElementException)
+            {
+                // במקרה שהאלמנט לא נמצא, החזר null
+                return null;
+            }
+            catch (FormatException)
+            {
+                // במקרה של בעיית עיצוב, החזר null
+                return null;
+            }
+        }
     }
+
 }

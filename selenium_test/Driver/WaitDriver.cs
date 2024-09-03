@@ -15,9 +15,8 @@ namespace DotnetSeleniumTest.Browser
         {
             try
             {
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
-                var req = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
-                if (req != null) return req;
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
             }
             catch (Exception e)
             {
@@ -38,7 +37,6 @@ namespace DotnetSeleniumTest.Browser
                 return false;
             }
         }
-
 
     }
 }

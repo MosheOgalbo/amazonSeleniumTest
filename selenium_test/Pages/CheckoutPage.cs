@@ -1,6 +1,5 @@
 using DotnetSeleniumTest.Browser;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
+
 
 namespace DotnetSeleniumTest.Pages
 {

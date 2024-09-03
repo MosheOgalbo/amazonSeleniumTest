@@ -58,6 +58,7 @@ namespace DotnetSeleniumTest.Pages
             // ActionsInWeb actionsInWeb = new ActionsInWeb(driver);
             //WaitDriver waitElement = new WaitDriver(driver);
             // _waitElement.UnitToElementIsClick(byProductCard);
+            RefreshDriver();
             _waitElement.UnitToElementIsClick(byMemoryFilter);
             // actionsInWeb.Screenshot();
             GetElement(byMemoryFilter).ClickInElement();
@@ -127,6 +128,9 @@ namespace DotnetSeleniumTest.Pages
 
         public List<string> CollectProductLinksTopNen()
         {
+            RefreshDriver();
+            _waitElement.UnitToElementIsClick(byProductCard);
+
             List<string> productList = new List<string>();
             IReadOnlyList<IWebElement> products = GetElements(byProductCard);
             foreach (var product in products)
@@ -139,7 +143,11 @@ namespace DotnetSeleniumTest.Pages
                     {    // קבל את הטקסט מהאלמנט
                         string reviewText = reviews[i].Text;
                         // הסר את כל התווים שאינם מספריים
-                        string reviewCountStr = new string(reviewText.Where(char.IsDigit).ToArray());
+                        //string reviewCountStr = new string(reviewText.Where(char.IsDigit).ToArray());
+                        string reviewCountStr = new string(reviewText.Where(c => char.IsDigit(c) || c == ',').ToArray());
+
+                        // הסר את הפסיקים מהטקסט
+                        reviewCountStr = reviewCountStr.Replace(",", "");
                         // המר את הטקסט למספר שלם
                         int reviewCount = int.Parse(reviewCountStr);
 
@@ -158,14 +166,19 @@ namespace DotnetSeleniumTest.Pages
                     if (!badReviewFound)
                     {
                         var linkItem = product.FindElement(By.CssSelector("a")).GetAttribute("href");
-                        var priceItem = product.FindElement(By.CssSelector(".a-price-whole")).Text;
-                        var descriptionItem = product.FindElement(By.CssSelector("a")).Text;
+                        // string priceItem = product.FindElement(By.CssSelector(".a-price-whole")).Text;
+                        // string priceWhole = product.FindElement(By.XPath(".//span[@class='a-price-whole']")).Text;
+                        // string priceFraction = product.FindElement(By.XPath(".//span[@class='a-price-fraction']")).Text;
+                        // string fullPriceString = priceWhole + "." + priceFraction;
+                        // float fullPrice = float.Parse(fullPriceString);
+                        float? fullPrice = CheckValidPrice(product);
+                        string descriptionItem = product.FindElement(By.XPath(".//span[contains(@class,'base a-text-nor')]")).Text;
                         // productList.Add(new ProductInfo
                         // {
-                        //     URL= linkItem,
-                        //     Price = priceItem,
+                        //     URL = linkItem,
+                        //     Price = fullPrice,
                         //     Manufacturer = descriptionItem
-                        //     }
+                        // }
                         // );
 
                         productList.Add(linkItem);
@@ -176,11 +189,55 @@ namespace DotnetSeleniumTest.Pages
                             break;
                         }
                     }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 
             return productList;
         }
+        public float? CheckValidPrice(IWebElement product)
+        {
+            try
+            {
+                // נסה למצוא את האלמנטים של המחיר השלם והחלק העשרוני
+                var priceWholeElement = product.FindElement(By.XPath(".//span[@class='a-price-whole']"));
+                var priceFractionElement = product.FindElement(By.XPath(".//span[@class='a-price-fraction']"));
+
+                // קבל את הטקסט של המחיר השלם והחלק העשרוני
+                string priceWhole = priceWholeElement.Text;
+                string priceFraction = priceFractionElement.Text;
+
+                // חיבור המחיר השלם והחלק העשרוני למחרוזת אחת
+                string fullPriceString = $"{priceWhole}.{priceFraction}";
+
+                // המרת המחרוזת למספר עשרוני
+                if (float.TryParse(fullPriceString, out float fullPrice))
+                {
+                    return fullPrice;
+                }
+                else
+                {
+                    // אם לא ניתן להמיר למספר עשרוני, החזר null
+                    return null;
+                }
+            }
+            catch (NoSuchElementException)
+            {
+                // במקרה שהאלמנט לא נמצא, החזר null
+                return null;
+            }
+            catch (FormatException)
+            {
+                // במקרה של בעיית עיצוב, החזר null
+                return null;
+            }
+        }
+
 
     }
+
+
 }

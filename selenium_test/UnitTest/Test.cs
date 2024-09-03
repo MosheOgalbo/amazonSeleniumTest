@@ -9,7 +9,6 @@ namespace selenium_test.Tests
     [TestFixture("laptop")]
     public class AmazonShoppingJourneyTests : RunningTest
     {
-
         public FileService? _fileService;
         private readonly string? _itemSearch;
         private List<string>? _productLinks;
@@ -18,6 +17,7 @@ namespace selenium_test.Tests
         {
             this._itemSearch = _itemSearch;
         }
+
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
@@ -27,11 +27,9 @@ namespace selenium_test.Tests
         [SetUp]
         public void Setup()
         {
+            CreateTest(TestContext.CurrentContext.Test.MethodName!);
             Console.WriteLine("nwe Setup");
             _actions?.Screenshot();
-            _test = _extent?.CreateTest(TestContext.CurrentContext.Test.Name);
-
-
         }
 
         [Test]
@@ -39,6 +37,7 @@ namespace selenium_test.Tests
         [Order(1)]
         public void FirstTest()
         {
+            LogInfo("test started");
             HomePage homesPage = new HomePage();
             homesPage.SearchForItem(_itemSearch!);
         }
@@ -84,36 +83,20 @@ namespace selenium_test.Tests
         }
 
         [TearDown]
-        public void DownTest()
+        public void TearDownTest()
         {
             _actions?.Screenshot();
-
-            var status = TestContext.CurrentContext.Result.Outcome.Status;
-            var errorMessage = TestContext.CurrentContext.Result.Message;
-            var stackTrace = TestContext.CurrentContext.Result.StackTrace;
-
-            if (status == TestStatus.Failed)
-            {
-                _test?.Fail($"Test Failed: {errorMessage}");
-                if (!string.IsNullOrEmpty(stackTrace))
-                {
-                    _test?.Log(AventStack.ExtentReports.Status.Fail, $"Stack Trace: {stackTrace}");
-                }
-            }
-            else if (status == TestStatus.Passed)
-            {
-                _test?.Pass("Test Passed");
-            }
-            else
-            {
-                _test?.Skip("Test Skipped");
-            }
-
+            EndReporting();
+            // EndTest();
         }
+
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
             _actions?.Screenshot();
         }
+
     }
+
+
 }
