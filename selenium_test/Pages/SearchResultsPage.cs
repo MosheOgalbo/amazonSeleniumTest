@@ -17,19 +17,21 @@ namespace DotnetSeleniumTest.Pages
         }
 
         // מגדירים את האלמנטים שצריך לאתר בדף תוצאות החיפוש
-        By priceFilter => By.XPath("//*[contains(@class, 'slider-container')]");
+        private By priceFilter => By.XPath("//*[contains(@class, 'slider-container')]");
         // מגדירים את האלמנטים שצריך לאתר בדף תוצאות החיפוש
         private By lowerBoundSlider => By.Id("p_36/range-slider_slider-item_lower-bound-slider");
         private By upperBoundSlider => By.Id("p_36/range-slider_slider-item_upper-bound-slider");
         private By byMemoryFilter => By.XPath("//div//span[contains(text(),'16 GB')]");
-
-        By ratingFilter => By.XPath("//span[contains(text(),'4 Stars & Up')]");
-        By byButtonFilter => By.XPath("//*[contains(@class,'sf-submit-range-button')]");
-        By byProductCard => By.XPath("//*[contains(@class,'gsx-ies-anchor')]");
-        By byProductReviews => By.XPath("//*[contains(@class,'instrumentation-wrapper')]");
+        private By ratingFilter => By.XPath("//span[contains(text(),'4 Stars & Up')]");
+        private By byButtonFilter => By.XPath("//*[contains(@class,'sf-submit-range-button')]");
+        private By byProductCard => By.XPath("//*[contains(@class,'gsx-ies-anchor')]");
+        private By byProductReviews => By.XPath("//*[contains(@class,'instrumentation-wrapper')]");
+        private By byProductDescription => By.XPath(".//span[contains(@class,'base a-text-nor')]");
+        private By byPriceWhole => By.XPath(".//span[@class='a-price-whole']");
+        private By byPriceFraction => By.XPath(".//span[@class='a-price-fraction']");
         // החזרת IWebElement עבור Locator
-        private IWebElement GetElement(By by) => Browser.DriverTest.driver!.FindElement(by);
-        private IReadOnlyList<IWebElement> GetElements(By by) => Browser.DriverTest.driver!.FindElements(by);
+        private IWebElement GetElement(By by) => driver!.FindElement(by);
+        private IReadOnlyList<IWebElement> GetElements(By by) => driver!.FindElements(by);
 
         public void AdjustSlider(int upperBoundValue)
         {
@@ -165,14 +167,10 @@ namespace DotnetSeleniumTest.Pages
 
                     if (!badReviewFound)
                     {
-                        var linkItem = product.FindElement(By.CssSelector("a")).GetAttribute("href");
-                        // string priceItem = product.FindElement(By.CssSelector(".a-price-whole")).Text;
-                        // string priceWhole = product.FindElement(By.XPath(".//span[@class='a-price-whole']")).Text;
-                        // string priceFraction = product.FindElement(By.XPath(".//span[@class='a-price-fraction']")).Text;
-                        // string fullPriceString = priceWhole + "." + priceFraction;
-                        // float fullPrice = float.Parse(fullPriceString);
+                        string linkItem = product.FindElement(By.CssSelector("a")).GetAttribute("href");
+
                         float? fullPrice = CheckValidPrice(product);
-                        string descriptionItem = product.FindElement(By.XPath(".//span[contains(@class,'base a-text-nor')]")).Text;
+                        string descriptionItem = product.FindElement(byProductDescription).Text;
                         // productList.Add(new ProductInfo
                         // {
                         //     URL = linkItem,
@@ -202,11 +200,11 @@ namespace DotnetSeleniumTest.Pages
         {
             try
             {
+                _waitElement.UnitToElementIsClick(byPriceWhole);
                 // נסה למצוא את האלמנטים של המחיר השלם והחלק העשרוני
-                var priceWholeElement = product.FindElement(By.XPath(".//span[@class='a-price-whole']"));
-                var priceFractionElement = product.FindElement(By.XPath(".//span[@class='a-price-fraction']"));
+                IWebElement priceWholeElement = product.FindElement(byPriceWhole);
+                IWebElement priceFractionElement = product.FindElement(byPriceFraction);
 
-                // קבל את הטקסט של המחיר השלם והחלק העשרוני
                 string priceWhole = priceWholeElement.Text;
                 string priceFraction = priceFractionElement.Text;
 

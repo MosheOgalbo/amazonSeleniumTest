@@ -5,6 +5,7 @@ using AventStack.ExtentReports.MarkupUtils;
 using System.Reflection;
 using NUnit.Framework;
 using DotnetSeleniumTest.Browser;
+using System.IO;
 
 namespace selenium_test.Services
 {
@@ -18,6 +19,9 @@ namespace selenium_test.Services
         public static ExtentReports startReporting()
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "../../../ReportTest";
+            //var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "../../../ReportTest");
+            Console.WriteLine("Report will be saved to: " + path);
+
             if (_extentReport == null)
             {
                 Directory.CreateDirectory(path);
@@ -36,7 +40,14 @@ namespace selenium_test.Services
 
         public static void EndReporting()
         {
-            startReporting().Flush();
+            if (_extentReport != null)
+            {
+                startReporting().Flush();
+            }
+            else
+            {
+                throw new InvalidOperationException("ExtentReport is not initialized. Cannot flush the report.");
+            }
         }
 
         public static void LogInfo(string info)

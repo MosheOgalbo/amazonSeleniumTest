@@ -14,20 +14,20 @@ namespace selenium_test;
 public class RunningTest : ExtentReporting
 {
     //public IWebDriver _driver;
-    protected ExtentReports? _extent;
-    protected ExtentTest? _test;
+    public static ExtentReports? _extent;
+    public static ExtentTest? _test;
     public ActionsInWeb? _actions;
 
 
     [OneTimeSetUp]
     public void GlobalSetup()
     {
+        Initialize("https://www.amazon.com/");
         _actions = new ActionsInWeb();
-        DriverTest.Initialize("https://www.amazon.com/");
 
-        // var htmlReporter = new ExtentSparkReporter("../../../ReportTest/ExtentReport.html");
-        // _extent = new ExtentReports();
-        // _extent.AttachReporter(htmlReporter);
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("../../../ReportTest/ExtentReport.html");
+        _extent = new ExtentReports();
+        _extent.AttachReporter(htmlReporter);
 
         // Add system info to the report
         // _extent.AddSystemInfo("Operating System", Environment.OSVersion.ToString());
@@ -41,8 +41,8 @@ public class RunningTest : ExtentReporting
     [OneTimeTearDown]
     public void GlobalTeardown()
     {
-        DriverTest.Cleanup();
-
+        Cleanup();
+        //  _extent?.Flush();
 
     }
 }

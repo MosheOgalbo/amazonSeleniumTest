@@ -27,9 +27,12 @@ namespace selenium_test.Tests
         [SetUp]
         public void Setup()
         {
-            CreateTest(TestContext.CurrentContext.Test.MethodName!);
+            //CreateTest(TestContext.CurrentContext.Test.MethodName!);
+            // CreateTest(TestContext.CurrentContext.Test.Name!);
+
             Console.WriteLine("nwe Setup");
             _actions?.Screenshot();
+            _test = _extent?.CreateTest(TestContext.CurrentContext.Test.Name!);
         }
 
         [Test]
@@ -37,7 +40,8 @@ namespace selenium_test.Tests
         [Order(1)]
         public void FirstTest()
         {
-            LogInfo("test started");
+            //LogInfo("test started");
+            //  ExtentManager._test = ExtendManager._extent.CreateTest("FirstTest");
             HomePage homesPage = new HomePage();
             homesPage.SearchForItem(_itemSearch!);
         }
@@ -86,8 +90,8 @@ namespace selenium_test.Tests
         public void TearDownTest()
         {
             _actions?.Screenshot();
-            EndReporting();
-            // EndTest();
+            EndTest();
+            //EndReporting();
         }
 
         [OneTimeTearDown]

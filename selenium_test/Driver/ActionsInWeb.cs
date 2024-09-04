@@ -50,9 +50,6 @@ namespace DotnetSeleniumTest.Browser
             var img = file.AsBase64EncodedString;
             return img;
         }
-        internal object ClickAndHold(IWebElement priceFilter)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

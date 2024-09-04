@@ -5,7 +5,7 @@ using DotnetSeleniumTest.Browser;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class ProductPage : Browser.DriverTest
+    public class ProductPage : DriverTest
     {
         private readonly IWebDriver? _driver;
         private readonly WaitDriver _wait;

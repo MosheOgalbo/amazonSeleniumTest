@@ -7,8 +7,8 @@ namespace DotnetSeleniumTest.Browser
     {
         public static IWebDriver? driver;
         // private  static readonly WebDriverWait? wait;
-        // יצירת WebDriver עבור Chrome
-        public static IWebDriver Initialize(string url)
+
+        public static IWebDriver Initialize(string url = "http://localhost")
         {
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
@@ -17,8 +17,7 @@ namespace DotnetSeleniumTest.Browser
             TransitionBrowser(url);
             RefreshDriver();
             Thread.Sleep(5000);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            // Driver.webDriver = webDriver;
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(40);
             return driver;
         }
 
@@ -27,7 +26,6 @@ namespace DotnetSeleniumTest.Browser
             try
             {
                 driver?.Navigate().GoToUrl(url);
-
             }
             catch (Exception e)
             {
