@@ -18,7 +18,6 @@ public class RunningTest : ExtentReporting
     public static ExtentTest? _test;
     public ActionsInWeb? _actions;
 
-
     [OneTimeSetUp]
     public void GlobalSetup()
     {
@@ -34,8 +33,6 @@ public class RunningTest : ExtentReporting
         // _extent.AddSystemInfo("Host Name", Dns.GetHostName());
         // _extent.AddSystemInfo("Environment", "QA");
         // _extent.AddSystemInfo("User Name", Environment.UserName);
-
-
     }
 
     [OneTimeTearDown]
@@ -43,6 +40,6 @@ public class RunningTest : ExtentReporting
     {
         Cleanup();
         //  _extent?.Flush();
-
     }
+
 }

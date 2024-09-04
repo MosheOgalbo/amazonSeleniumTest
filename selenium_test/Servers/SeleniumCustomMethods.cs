@@ -30,6 +30,7 @@ namespace selenium_test
                 Console.WriteLine(e.Data.ToString());
             }
         }
+
         public static void SelectDropdownByText(this IWebElement locator, string text)
         {
             try
@@ -42,6 +43,7 @@ namespace selenium_test
                 Console.WriteLine(e.Data.ToString());
             }
         }
+
         public static void SelectDropdownByValue(this IWebElement locator, string value)
         {
             try
@@ -54,6 +56,7 @@ namespace selenium_test
                 Console.WriteLine(e.Data.ToString());
             }
         }
+
         public static void MultiSelectElements(this IWebElement locator, string[] values)
         {
             try
@@ -69,6 +72,7 @@ namespace selenium_test
                 Console.WriteLine(e.Data.ToString());
             }
         }
+
         public static List<string> GetAllSelectedOptions(this IWebElement locator)
         {
             if (locator == null)

@@ -5,7 +5,7 @@ namespace selenium_test.Services
 {
     public class FileService
     {
-        // פונקציה לשמירת קישורי המוצרים לקובץ
+        // Function to save the product links to a file
         public void SaveProductLinks(List<string> links, string filePath)
         {
             using (StreamWriter writer = new StreamWriter(filePath))
@@ -17,22 +17,20 @@ namespace selenium_test.Services
             }
         }
 
-        //פונקציה לשמירה קישורי לקובץ json
+        //Function to save links to a json file
         public void SaveLinksToJsonFile(List<string> links, string filePath)
         {
-            // המרת רשימת הקישורים ל-JSON
+            // Convert the list of links to JSON
             string json = JsonConvert.SerializeObject(links, Formatting.Indented);
-
-            // כתיבת ה-JSON לקובץ
+            // Writing the JSON to a file
             File.WriteAllText(filePath, json);
         }
 
         public void SaveReviewsToJsonFile(List<ItemReviewModel> reviews, string filePath)
         {
-            // המרת רשימת הביקורות ל-JSON
+            // Convert the audit list to JSON
             string json = JsonConvert.SerializeObject(reviews, Formatting.Indented);
-
-            // כתיבת ה-JSON לקובץ
+            // Writing the JSON to a file
             File.WriteAllText(filePath, json);
         }
     }

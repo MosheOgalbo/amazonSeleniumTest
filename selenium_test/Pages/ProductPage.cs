@@ -9,13 +9,13 @@ namespace DotnetSeleniumTest.Pages
     {
         private readonly IWebDriver? _driver;
         private readonly WaitDriver _wait;
-        // אתחול של דף המוצר
+
         public ProductPage()
         {
-            _driver = Browser.DriverTest.driver;
-            //_wait = new WaitDriver(_driver);
+            _driver = driver;
             _wait = new WaitDriver();
         }
+
         private By byCustomerReviews => By.XPath("//*[contains(@id,'customer_review')]");
         private By byReviewerName => By.XPath("//span [@class='a-profile-name']");
         private By byReviewText => By.XPath("//div[contains(@class,'reviewText')]");
@@ -24,7 +24,6 @@ namespace DotnetSeleniumTest.Pages
         private IWebElement GetElement(By by) => _driver!.FindElement(by);
         private IReadOnlyList<IWebElement> GetElements(By by) => _driver!.FindElements(by);
 
-
         public void NavigateProductPage(List<string> ProducList)
         {
             if (DataCheck.IsDataEmpty(ProducList))
@@ -32,10 +31,10 @@ namespace DotnetSeleniumTest.Pages
                 TransitionBrowser(ProducList[0]);
             }
         }
-        // לוקח את כול הביקורות של המוצר
-        public List<ItemReviewModel> GetAllReviews()
-        {// איסוף כל הביקורות
 
+        // Takes all reviews of the product
+        public List<ItemReviewModel> GetAllReviews()
+        {
             var reviews = new List<ItemReviewModel>();
 
             IReadOnlyList<IWebElement> reviewsElement = GetElements(byCustomerReviews);
@@ -43,22 +42,19 @@ namespace DotnetSeleniumTest.Pages
             {
                 IWebElement reviewerNameElement = review.FindElement(byReviewerName);
                 IWebElement reviewTextElement = review.FindElement(byReviewText);
-                // מציאת שם המבקר
-                //      string reviewerName = reviewerNameElement.Text;
-                // // מציאת טקסט הביקורת
-                // string reviewText = reviewTextElement.Text;
+
                 reviews.Add(new ItemReviewModel
                 {
                     ReviewerName = reviewerNameElement.Text,
                     ReviewText = reviewTextElement.Text,
                 }
-                    );
+                );
             }
             return reviews;
 
         }
 
-        //מעבר למסך הוספה מוצר זה
+        //Go to the add this product screen
         public void AddProductToCart()
         {
             _wait.UnitToElementIsClick(byAddProductCartButton)?.Click();

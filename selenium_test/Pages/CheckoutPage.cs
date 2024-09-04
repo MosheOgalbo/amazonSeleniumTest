@@ -9,18 +9,14 @@ namespace DotnetSeleniumTest.Pages
         //private readonly WebDriverWait? _wait;
         private readonly ActionsInWeb? _actions;
 
-        // אתחול של דף התשלום
         public CheckoutPage()
         {
-            // this._driver = Driver.Driver._driver;
             _actions = new ActionsInWeb();
-
         }
 
-        // פונקציה לצילום מסך
+        // Function to take a screenshot
         public void MakingPaymentForProduct()
         {
-            //Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
             _actions?.Screenshot();
         }
     }

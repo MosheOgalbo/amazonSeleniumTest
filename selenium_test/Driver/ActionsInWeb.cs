@@ -7,24 +7,26 @@ namespace DotnetSeleniumTest.Browser
     public class ActionsInWeb : DriverTest
     {
         private readonly IWebDriver? _driver;
+
         public ActionsInWeb()
         {
-            this._driver = Browser.DriverTest.driver;
+            this._driver = driver;
         }
+
         public void Screenshot()
         {
             try
             {
+                Thread.Sleep(1000);
+                string? screenshotDirectory = "../../../Pngs";
 
-                Thread.Sleep(100);
-                string screenshotDirectory = "../../../Pngs";
-                // בדיקה אם התיקייה קיימת, אם לא - יצירת התיקייה
+                // Checking if the folder exists, if not - creating the folder
                 if (!Directory.Exists(screenshotDirectory))
                 {
                     Directory.CreateDirectory(screenshotDirectory);
                 }
 
-                // יצירת שם קובץ ייחודי עם תאריך ושעה
+                // Create a unique filename with date and time
                 string fileName = $"screenshot_{DateTime.Now:yyyyMMdd_HHmmss}.png";
                 string screenshotPath = Path.Combine(screenshotDirectory, fileName);
 
@@ -33,10 +35,9 @@ namespace DotnetSeleniumTest.Browser
                 screenshot.SaveAsFile(screenshotPath);
                 TestContext.WriteLine($"Screenshot saved at: {screenshotPath}");
 
-                // הוספת הצילום מסך כקובץ מצורף לתוצאות הבדיקה
+                // Adding the screenshot as an attachment to the test results
                 TestContext.AddTestAttachment(screenshotPath);
-                Thread.Sleep(1000);
-
+                Thread.Sleep(50);
             }
             catch (Exception e)
             {

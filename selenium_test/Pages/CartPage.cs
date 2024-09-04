@@ -9,7 +9,7 @@ namespace DotnetSeleniumTest.Pages
         //private readonly IWebDriver? driver;
         private readonly WaitDriver _wait;
 
-        // אתחול של דף העגלה
+        // Initialize the cart page
         public CartPage()
         {
             //this._driver = Driver.Driver._driver;
@@ -17,23 +17,23 @@ namespace DotnetSeleniumTest.Pages
             _wait = new WaitDriver();
         }
 
-        // רכיבים בדף
+        // components on the page
         private IWebElement CartIconLogo => Browser.DriverTest.driver!.FindElement(By.Id("nav-cart")); // אייקון העגלה
         private IWebElement CheckoutButton => Browser.DriverTest.driver!.FindElement(By.Id("desktop-ptc-button-celWidget")); // כפתור ההמשך לתשלום
         private By byProductInCart => By.XPath("//*[@data-bundleitem='absent']");
-        private IReadOnlyList<IWebElement> GetElements(By by) => Browser.DriverTest.driver!.FindElements(by);
+        private IReadOnlyList<IWebElement> GetElements(By by) => driver!.FindElements(by);
 
-
-        // פונקציה לאימות כמות פריטי העגלה
+        // Function to verify the amount of cart items
         public bool VerifyCart()
         {
             _wait.UnitToElementIsClick(byProductInCart);
             string cartIconLogoText = CartIconLogo.Text;
             int numberItemsList = GetElements(byProductInCart).Count();
-            // בדוק אם הטקסט אינו ריק
+
+            // Check if the text is not empty
             if (!string.IsNullOrWhiteSpace(cartIconLogoText) || numberItemsList != 0)
             {
-                // נסה להמיר את הטקסט למספר
+                // tried to convert the text to a number
                 if (int.TryParse(cartIconLogoText, out int cartIconLogoValue))
                 {
                     if (numberItemsList == cartIconLogoValue)
@@ -47,7 +47,7 @@ namespace DotnetSeleniumTest.Pages
                 }
                 else
                 {
-                    // אם ההמרה נכשלה, הודע על כך
+                    // If the conversion failed, report it
                     Console.WriteLine($"הטקסט '{cartIconLogoText}' אינו מספר.");
                     return false;
                 }
@@ -56,10 +56,10 @@ namespace DotnetSeleniumTest.Pages
             return true;
         }
 
-        // פונקציה להמשך לתשלום
+        // continue function to pay by pressing a button to pass payment
         public void ProceedToCheckout()
         {
-            CheckoutButton.ClickInElement(); // לוחץ על כפתור ההמשך לתשלום
+            CheckoutButton.ClickInElement();
         }
 
         public void ProceedToPayForProduct()
@@ -74,7 +74,7 @@ namespace DotnetSeleniumTest.Pages
                 Console.WriteLine("Payment cannot be continued because there is no product");
             }
             ProceedToCheckout();
-            //_wait.UntilElementIsRemoved(byProductInCart);
+            Thread.Sleep(10);
         }
     }
 }

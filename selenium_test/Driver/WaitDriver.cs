@@ -5,12 +5,11 @@ namespace DotnetSeleniumTest.Browser
 {
     public class WaitDriver : DriverTest
     {
-        //private  readonly IWebDriver? driver;
         public WaitDriver()
         {
-            //this.driver = Driver.driver;
+
         }
-        //  עד שאלמנט יוצג המתנה לחלון חדש
+
         public IWebElement? UnitToElementIsClick(By locator)
         {
             try
@@ -24,6 +23,7 @@ namespace DotnetSeleniumTest.Browser
             }
             return null;
         }
+
         public bool UntilElementIsRemoved(By locator)
         {
             try

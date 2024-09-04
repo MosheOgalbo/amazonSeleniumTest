@@ -54,16 +54,15 @@ namespace DotnetSeleniumTest.Browser
             {
                 IWebElement webElement = driver!.FindElement(by);
                 return webElement;
-
             }
             catch (NoSuchElementException)
             {
-                // במקרה שהאלמנט לא נמצא, החזר null
+                // In case the element is not found, return null
                 return null;
             }
             catch (FormatException)
             {
-                // במקרה של בעיית עיצוב, החזר null
+                // In case of formatting problem, return null
                 return null;
             }
         }
