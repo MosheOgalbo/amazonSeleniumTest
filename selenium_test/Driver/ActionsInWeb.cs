@@ -17,7 +17,7 @@ namespace DotnetSeleniumTest.Browser
         {
             try
             {
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 string? screenshotDirectory = "../../../Pngs";
 
                 // Checking if the folder exists, if not - creating the folder
@@ -37,7 +37,7 @@ namespace DotnetSeleniumTest.Browser
 
                 // Adding the screenshot as an attachment to the test results
                 TestContext.AddTestAttachment(screenshotPath);
-                Thread.Sleep(50);
+                //Thread.Sleep(50);
             }
             catch (Exception e)
             {

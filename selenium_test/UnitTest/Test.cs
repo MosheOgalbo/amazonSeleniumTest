@@ -10,12 +10,12 @@ namespace selenium_test.Tests
     public class AmazonShoppingJourneyTests : RunningTest
     {
         public FileService? _fileService;
-        private readonly string? _itemSearch;
+        private string? _itemSearch;
         private List<string>? _productLinks;
 
-        public AmazonShoppingJourneyTests(string _itemSearch)
+        public AmazonShoppingJourneyTests(string itemSearch)
         {
-            this._itemSearch = _itemSearch;
+            _itemSearch = itemSearch;
         }
 
         [OneTimeSetUp]

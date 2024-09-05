@@ -4,7 +4,7 @@ using selenium_test;
 
 namespace DotnetSeleniumTest.Pages
 {
-    public class CartPage : Browser.DriverTest
+    public class CartPage : DriverTest
     {
         //private readonly IWebDriver? driver;
         private readonly WaitDriver _wait;
